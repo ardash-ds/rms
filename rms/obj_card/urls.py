@@ -30,6 +30,7 @@ urlpatterns = [
 
     # Адреса для загрузки каталога
     path('load_cat/', views.load_cat),
+    path('new_load_cat/', views.new_load_cat),
     path('remove_duplicates/', views.remove_duplicates),
     path('set_parent/', views.set_parent),
 

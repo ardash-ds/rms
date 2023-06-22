@@ -307,6 +307,28 @@ def storage_add(request):
 
 '''Дальше идёт код для загрузки БД. После заливки удалить'''
 
+def new_load_cat(request):
+    '''
+    Выгружаем из файла category.txt
+    
+    '''
+    print(os.getcwd ())
+    loads = ''
+    # with open('./category.txt', 'r', encoding='utf-8') as f:
+    with open('/home/RMS2022/RSM/rms/rms/category.txt', 'r', encoding='utf-8') as f:
+
+        loads = f.read()
+    categories = loads.split('\n')
+    
+    for cat in categories:
+        Category.objects.create(name=cat)
+
+    data = Category.objects.all()
+    print("Позиций в базе:", data.count())
+    return render(request, "object/category_load.html", {'data': data})
+
+
+
 def load_cat(request):
     '''
     Выгружаем из json файла и записываем в базу

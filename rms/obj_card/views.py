@@ -314,8 +314,8 @@ def new_load_cat(request):
     '''
     print(os.getcwd ())
     loads = ''
-    # with open('./category.txt', 'r', encoding='utf-8') as f:
-    with open('/home/RMS2022/RSM/rms/rms/category.txt', 'r', encoding='utf-8') as f:
+    # with open('./category', 'r', encoding='utf-8') as f:
+    with open('/home/RMS2022/RSM/rms/rms/category', 'r', encoding='utf-8') as f:
 
         loads = f.read()
     categories = loads.split('\n')

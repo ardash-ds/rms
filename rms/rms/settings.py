@@ -54,12 +54,15 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.google',
     'allauth.socialaccount.providers.yandex',
     'allauth.socialaccount.providers.vk',
+    
     'rest_framework',
+    'drf_spectacular',
     'django_mptt_admin',
     'mptt',
     'django_filters',
 
     'obj_card',
+    'apps.categories',
 ]
 
 MIDDLEWARE = [
@@ -202,3 +205,33 @@ EMAIL_USE_TLS = True
 
 DEFAULT_FROM_EMAIL = env.str('DEFAULT_FROM_EMAIL')
 SERVER_EMAIL = env.str('SERVER_EMAIL')
+
+REST_FRAMEWORK = {
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+    # 'DEFAULT_AUTHENTICATION_CLASSES': (
+    #     'core.services.auth_config.CookiesAuthentication',
+    # ),
+    # 'DEFAULT_PERMISSION_CLASSES': [
+    #     'rest_framework.permissions.IsAuthenticated',
+    # ],
+    # 'EXCEPTION_HANDLER': 'core.services.auth_config.authentication_check',
+    # 'JWT_BLACKLIST_ENABLED': True,
+    # 'JWT_BLACKLIST_TOKEN_CHECKS': ['blacklist'],
+    # 'JWT_AUTH_COOKIE': 'access',
+    # 'JWT_AUTH_REFRESH_COOKIE': 'refresh',
+}
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Managing things (DEV)',
+    'DESCRIPTION': 'Card file of storage places for user\'s belongings',
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'core.services.auth_config.CookiesAuthentication',
+    ],
+    'OPENAPI_AUTHENTICATION_EXTENSIONS': [
+        'core.services.auth_config.CookiesAuthenticationExtension',
+    ],
+    'COMPONENT_SPLIT_REQUEST': True,
+    # OTHER SETTINGS
+}

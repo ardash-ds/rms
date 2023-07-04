@@ -226,12 +226,12 @@ SPECTACULAR_SETTINGS = {
     'DESCRIPTION': 'Card file of storage places for user\'s belongings',
     'VERSION': '1.0.0',
     'SERVE_INCLUDE_SCHEMA': False,
-    'DEFAULT_AUTHENTICATION_CLASSES': [
-        'core.services.auth_config.CookiesAuthentication',
-    ],
-    'OPENAPI_AUTHENTICATION_EXTENSIONS': [
-        'core.services.auth_config.CookiesAuthenticationExtension',
-    ],
+    # 'DEFAULT_AUTHENTICATION_CLASSES': [
+    #     'core.services.auth_config.CookiesAuthentication',
+    # ],
+    # 'OPENAPI_AUTHENTICATION_EXTENSIONS': [
+    #     'core.services.auth_config.CookiesAuthenticationExtension',
+    # ],
     'COMPONENT_SPLIT_REQUEST': True,
     # OTHER SETTINGS
 }

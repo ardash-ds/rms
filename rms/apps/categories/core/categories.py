@@ -8,9 +8,10 @@ from django.http import HttpRequest
 
 from ..models import CategoriesModel
 
-from ..serializers import CategoriesModelSerializer
-
-
+from ..serializers import (
+    CategoriesModelSerializer,
+    CategoryResponseSerializer,
+)
 
 
 # =============================================GET=============================================

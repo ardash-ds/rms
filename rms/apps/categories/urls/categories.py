@@ -8,7 +8,7 @@ urlpatterns = [
         route='',
         view=GetCategoriesView,
         name='get_categories',
-    )
+    ),
 ]
 
 

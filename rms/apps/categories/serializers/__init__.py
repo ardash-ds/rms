@@ -1,6 +1,8 @@
-from .model import CategoriesModel as CategoriesModelSerializer
+from .model import CategoriesSerializer as CategoriesModelSerializer
+from .response import CategorySerializer as CategoryResponseSerializer
 
 
 __all__ = (
     'CategoriesModelSerializer',
+    'CategoryResponseSerializer',
 )

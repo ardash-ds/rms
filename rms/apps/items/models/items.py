@@ -37,3 +37,19 @@ class ItemsModel(models.Model):
 
     def __str__(self):
         return self.name
+
+class ImageItemModel(models.Model):
+    image = models.ImageField(upload_to='%Y/%m/%d/')
+    item = models.ForeignKey(
+        'items.ItemModel', 
+        related_name='image_item_for_items', 
+        on_delete=models.CASCADE, 
+        null=True, 
+        blank=True
+    )
+
+    class Meta:
+        db_table = 'item_images'
+        verbose_name = 'Фотография'
+        verbose_name_plural = 'Фотографии'
+        

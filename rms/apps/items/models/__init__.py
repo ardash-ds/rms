@@ -1,6 +1,7 @@
-from .items import ItemsModel
+from .items import ItemsModel, ImageItemModel
 
 
 __all__=(
     'ItemsModel',
+    'ImageItemModel',
 )

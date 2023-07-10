@@ -55,17 +55,18 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.yandex',
     'allauth.socialaccount.providers.vk',
     
-    'rest_framework',
+    "corsheaders",
     'drf_spectacular',
     'django_mptt_admin',
-    'mptt',
     'django_filters',
-    "corsheaders",
+    'mptt',
+    'rest_framework',
+    'rest_framework_simplejwt',
 
-    'obj_card',
     'apps.categories',
     'apps.items',
     'apps.storage',
+    'obj_card',
 ]
 
 MIDDLEWARE = [

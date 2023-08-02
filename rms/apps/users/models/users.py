@@ -5,7 +5,7 @@ from django.contrib.auth import (
 from django.db import models
 
 
-class UserModel(auth_models.AbstractBaseUser, auth_models.PermissionsMixin):
+class UserModel(auth_models.AbstractUser, auth_models.PermissionsMixin):
     username_validator = validators.UnicodeUsernameValidator()
     username = models.CharField(
         "username",
@@ -27,3 +27,11 @@ class UserModel(auth_models.AbstractBaseUser, auth_models.PermissionsMixin):
             "unique": "A user with that email already exists.",
         },
     )
+
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['username']
+
+    objects = auth_models.UserManager()
+
+    def __str__(self):
+        return self.email

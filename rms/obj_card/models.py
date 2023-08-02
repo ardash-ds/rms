@@ -6,7 +6,7 @@ from mptt.models import MPTTModel, TreeForeignKey
 
 class Storage(models.Model):
     name = models.CharField(max_length=100, blank=False, unique=False)
-    user = models.ForeignKey('auth.User', related_name='storage', on_delete=models.PROTECT)
+    user = models.ForeignKey('users.UserModel', related_name='storage', on_delete=models.PROTECT)
 
     def __str__(self):
         return self.name
@@ -49,7 +49,7 @@ class Object(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     name = models.CharField(max_length=100, blank=False, default='')
     description = models.TextField(blank=True, default='')
-    owner = models.ForeignKey('auth.User', related_name='object', on_delete=models.PROTECT)
+    owner = models.ForeignKey('users.UserModel', related_name='object', on_delete=models.PROTECT)
     category = TreeForeignKey(Category, related_name='object',  blank=True, null=True, on_delete=models.SET_NULL, 
         verbose_name='Категория')
     storage = models.ForeignKey(Storage, related_name='object', blank=True, null=True, on_delete=models.SET_NULL,

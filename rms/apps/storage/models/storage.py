@@ -5,7 +5,7 @@ class StorageModel(models.Model):
 
     name = models.CharField(max_length=100, blank=False, unique=True)
     user = models.ForeignKey(
-        'auth.User', 
+        'users.UserModel', 
         related_name='storage_user', 
         on_delete=models.PROTECT,
     )

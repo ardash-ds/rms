@@ -11,7 +11,7 @@ from rest_framework.permissions import AllowAny
 
 from django.http import HttpResponse, HttpRequest
 
-from ..core import sign_up_core
+from ..core import sign_in_core
 
 from ..serializers import (
     UserRegistrationRequestSerializer,
@@ -23,26 +23,23 @@ from ..services import (
 )
 
 
-
-
-
 # =============================================POST=============================================
 
 
+
+
 @extend_schema(
-    description="WORKS: Take email and password, create user and return 'access' and 'refresh' tokens in cookies",
+    description="WORKS: Take user's email and password and return 'access' and 'refresh' tokens in cookies",
     request=UserRegistrationRequestSerializer,
     methods=["POST"],
     responses={
         200: OpenApiResponse(description="Successfully registrated."),
-        400: OpenApiResponse(description='Error: Bad request'),
-        404: OpenApiResponse(description='Error: Not found'),
-        422: OpenApiResponse(description='Error: Unprocessable entity'),
-        500: OpenApiResponse(description='Error: Internal server error'),
+        500: OpenApiResponse(description="Error: Internal server error"),
     },
 )
 @api_view(['POST'])
 @permission_classes([AllowAny])
-def sign_up(request: HttpRequest) -> HttpResponse:
-    user = sign_up_core(request=request)
+def sign_in(request: HttpRequest) -> HttpResponse:
+    user = sign_in_core(request=request)
     return GetTokenHttpResponseService(user)
+

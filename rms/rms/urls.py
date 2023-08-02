@@ -16,12 +16,16 @@ urlpatterns = [
     path('api-auth/', include('rest_framework.urls')),
     path('accounts/', include('allauth.urls')),
     path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
-    path('api/schema/swagger-ui/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
+    path(
+        'api/schema/swagger-ui/', 
+        SpectacularSwaggerView.as_view(url_name='schema'), 
+        name='swagger-ui'
+    ),
     path(
         'api/schema/redoc/', 
         SpectacularRedocView.as_view(url_name='schema'), 
         name='redoc',
-        ),
+    ),
     path(
         'categoris/',
         include('apps.categories.urls.categories'),
@@ -35,6 +39,11 @@ urlpatterns = [
     path(
         'storage/',
         include('apps.storage.urls.storage'),
+        name='items',
+    ), 
+    path(
+        'users/',
+        include('apps.users.urls.users'),
         name='items',
     ), 
 ]

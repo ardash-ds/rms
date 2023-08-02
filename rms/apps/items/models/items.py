@@ -7,7 +7,7 @@ class ItemsModel(models.Model):
     name = models.CharField(max_length=100, blank=False)
     description = models.TextField(blank=True)
     user = models.ForeignKey(
-        'auth.User',  
+        'users.UserModel',  
         on_delete=models.PROTECT,
         related_name='item_user',
         verbose_name='Пользователь',
@@ -41,7 +41,7 @@ class ItemsModel(models.Model):
 class ImageItemModel(models.Model):
     image = models.ImageField(upload_to='%Y/%m/%d/')
     item = models.ForeignKey(
-        'items.ItemModel', 
+        'items.ItemsModel', 
         related_name='image_item_for_items', 
         on_delete=models.CASCADE, 
         null=True, 

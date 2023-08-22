@@ -58,9 +58,9 @@ INSTALLED_APPS = [
     
     "corsheaders",
     'drf_spectacular',
-    'django_mptt_admin',
+    # 'django_mptt_admin',
     'django_filters',
-    'mptt',
+    # 'mptt',
     'rest_framework',
     'rest_framework_simplejwt.token_blacklist',
 
@@ -82,7 +82,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'rms.urls'
+ROOT_URLCONF = 'config.urls'
 
 TEMPLATES = [
     {
@@ -108,7 +108,7 @@ TEMPLATES = [
 #     'allauth.account.auth_backends.AuthenticationBackend',
 # ]
 
-WSGI_APPLICATION = 'rms.wsgi.application'
+WSGI_APPLICATION = 'config.wsgi.application'
 
 SITE_ID = 1
 

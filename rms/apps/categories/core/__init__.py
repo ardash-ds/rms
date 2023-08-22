@@ -1,6 +1,6 @@
-from .categories import get_categorie_core
+from .categories import get_category_core
 
 
 __all__ = (
-    'get_categorie_core',
+    'get_category_core',
 )

@@ -10,9 +10,9 @@ from rest_framework.response import Response
 
 from django.http import HttpRequest, HttpResponse
 
-from ..core import get_categorie_core
+from ..core import get_category_core
 from ..serializers import (
-    CategoriesModelSerializer,
+    CategoryModelSerializer,
     CategoryResponseSerializer,
 )
 
@@ -26,10 +26,10 @@ from ..serializers import (
     methods=["GET"],
     request=None,
     responses={
-        200: OpenApiResponse(response=CategoriesModelSerializer(many=True))
+        200: OpenApiResponse(response=CategoryModelSerializer(many=True))
     },
 )
 @api_view(['GET'])
 def get_categories(request: HttpRequest) -> HttpResponse:
-    response = get_categorie_core(request)
+    response = get_category_core(request)
     return Response(response.data)

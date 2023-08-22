@@ -1,6 +1,6 @@
-from .items import get_items_core
+from .items import get_item_core
 
 
 __all__ = (
-    'get_items_core',
+    'get_item_core',
 )

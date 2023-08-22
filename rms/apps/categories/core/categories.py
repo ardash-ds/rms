@@ -6,16 +6,16 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.db import transaction
 from django.http import HttpRequest
 
-from ..models import CategoriesModel
+from ..models import CategoryModel
 
 from ..serializers import (
-    CategoriesModelSerializer,
+    CategoryModelSerializer,
     CategoryResponseSerializer,
 )
 
 
 # =============================================GET=============================================
 
-def get_categorie_core(request: HttpRequest) -> List[CategoriesModel]:
-    categories = CategoriesModel.objects.all()
-    return CategoriesModelSerializer(categories, many=True)
+def get_category_core(request: HttpRequest) -> List[CategoryModel]:
+    categories = CategoryModel.objects.all()
+    return CategoryModelSerializer(categories, many=True)

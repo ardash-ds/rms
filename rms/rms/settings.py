@@ -68,7 +68,7 @@ INSTALLED_APPS = [
     'apps.items',
     'apps.storage',
     'apps.users',
-    'obj_card',
+    # 'obj_card',
 ]
 
 MIDDLEWARE = [

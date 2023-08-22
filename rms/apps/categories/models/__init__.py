@@ -1,6 +1,6 @@
-from .categories import CategoriesModel
+from .categories import CategoryModel
 
 
 __all__=(
-    'CategoriesModel',
+    'CategoryModel',
 )

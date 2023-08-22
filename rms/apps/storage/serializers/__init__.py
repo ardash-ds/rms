@@ -1,6 +1,8 @@
-from .model import StorageSerializer as StorageModelSerializer
+from .model import StorageModelSerializer
+from .request import StorageCreationRequestSerializer
 
 
 __all__ = (
+    'StorageCreationRequestSerializer',
     'StorageModelSerializer',
 )

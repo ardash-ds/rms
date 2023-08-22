@@ -3,12 +3,13 @@ from django.db import models
 
 class StorageModel(models.Model):
 
-    name = models.CharField(max_length=100, blank=False, unique=True)
+    name = models.CharField(max_length=50, blank=False, unique=True)
     user = models.ForeignKey(
         'users.UserModel', 
         related_name='storage_user', 
         on_delete=models.PROTECT,
     )
+    created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         ordering = ['name']

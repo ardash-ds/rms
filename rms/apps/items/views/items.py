@@ -10,9 +10,9 @@ from rest_framework.response import Response
 
 from django.http import HttpRequest, HttpResponse
 
-from ..core import get_items_core
+from ..core import get_item_core
 from ..serializers import (
-    ItemsModelSerializer,
+    ItemModelSerializer,
 )
 
 
@@ -25,10 +25,10 @@ from ..serializers import (
     methods=["GET"],
     request=None,
     responses={
-        200: OpenApiResponse(response=ItemsModelSerializer(many=True))
+        200: OpenApiResponse(response=ItemModelSerializer(many=True))
     },
 )
 @api_view(['GET'])
 def get_items(request: HttpRequest) -> HttpResponse:
-    response = get_items_core(request)
+    response = get_item_core(request)
     return Response(response.data)

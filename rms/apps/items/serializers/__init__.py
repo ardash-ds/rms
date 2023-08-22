@@ -1,6 +1,6 @@
-from .model import ItemsSerializer as ItemsModelSerializer
+from .model import ItemSerializer as ItemModelSerializer
 
 
 __all__ = (
-    'ItemsModelSerializer',
+    'ItemModelSerializer',
 )

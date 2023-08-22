@@ -9,7 +9,7 @@ class UserModel(auth_models.AbstractUser, auth_models.PermissionsMixin):
     username_validator = validators.UnicodeUsernameValidator()
     username = models.CharField(
         "username",
-        max_length=30,
+        max_length=20,
         unique=True,
         help_text="Required. 20 characters or fewer. Letters, digits and @/./+/-/_ only.",
         validators=[username_validator],
@@ -19,7 +19,6 @@ class UserModel(auth_models.AbstractUser, auth_models.PermissionsMixin):
     )
     first_name = models.CharField(max_length=20)
     last_name = models.CharField(max_length=20)
-    description = models.TextField(max_length=100, null=True)
     email = models.EmailField(
         max_length=50,
         unique=True,
@@ -27,7 +26,8 @@ class UserModel(auth_models.AbstractUser, auth_models.PermissionsMixin):
             "unique": "A user with that email already exists.",
         },
     )
-
+    created_at = models.DateTimeField(auto_now_add=True)
+    
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']
 

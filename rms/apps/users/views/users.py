@@ -22,24 +22,46 @@ from ..services import (
     GetLogoutHttpResponse,
 )
 
+from ..core import sign_up_core
+
 
 # =============================================POST=============================================
 
 
-
-
 @extend_schema(
-    description="WORKS: Take user's email and password and return 'access' and 'refresh' tokens in cookies",
+    summary="WORKS: Sign-up by email and password",
+    description="Take email and password, create user and return 'access' and 'refresh' tokens in cookies",
     request=UserRegistrationRequestSerializer,
     methods=["POST"],
     responses={
-        200: OpenApiResponse(description="Successfully registrated."),
+        201: OpenApiResponse(description="Successfully registrated."),
+        400: OpenApiResponse(description="Error: Bad request"),
+        404: OpenApiResponse(description="Error: Not found"),
+        422: OpenApiResponse(description="Error: Unprocessable entity"),
         500: OpenApiResponse(description="Error: Internal server error"),
     },
+    tags=[
+        "users",
+    ],
 )
-@api_view(['POST'])
+@api_view(["POST"])
 @permission_classes([AllowAny])
-def sign_in(request: HttpRequest) -> HttpResponse:
-    user = sign_in_core(request=request)
-    return GetTokenHttpResponseService(user)
+def sign_up(request: HttpRequest) -> HttpResponse:
+    sign_up_core(request=request)
+    return HttpResponse(status=201)
+
+# @extend_schema(
+#     description="WORKS: Take user's email and password and return 'access' and 'refresh' tokens in cookies",
+#     request=UserRegistrationRequestSerializer,
+#     methods=["POST"],
+#     responses={
+#         200: OpenApiResponse(description="Successfully registrated."),
+#         500: OpenApiResponse(description="Error: Internal server error"),
+#     },
+# )
+# @api_view(['POST'])
+# @permission_classes([AllowAny])
+# def sign_in(request: HttpRequest) -> HttpResponse:
+#     user = sign_in_core(request=request)
+#     return GetTokenHttpResponseService(user)
 

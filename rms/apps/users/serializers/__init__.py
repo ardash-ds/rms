@@ -1,4 +1,4 @@
-from .request import UserRegistrationSerializer as UserRegistrationRequestSerializer
+from .request import UserRegistrationRequestSerializer
 
 
 __all__ = (

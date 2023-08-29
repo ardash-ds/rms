@@ -10,11 +10,34 @@ from django.db import transaction
 from django.forms import ValidationError
 from django.http import HttpRequest
 
+from ..serializers import UserRegistrationRequestSerializer
 from ..models import UserModel
 
 from ..services import UserManagerService
 
+# =============================================POST=============================================
 
+
+@transaction.atomic
+def sign_up_core(request: HttpRequest) -> None:
+    """Signs up a user, given their email and password.
+
+    Args:
+        request (django.http.HttpRequest): The HTTP request object.
+
+    Returns:
+        None
+    """
+    data = JSONParser().parse(request)
+    serializer = UserRegistrationRequestSerializer(data=data)
+    serializer.is_valid(raise_exception=True)
+
+    email = serializer.validated_data["email"]
+    password = serializer.validated_data["password"]
+
+    UserModel.objects.create_user(username=email, email=email, password=password)
+
+    
 @transaction.atomic
 def sign_in_core(request: HttpRequest) -> UserModel:
     """

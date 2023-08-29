@@ -4,7 +4,7 @@ from rest_framework.parsers import JSONParser
 
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import transaction
-from django.http import HttpRequest
+from django.http import HttpRequest, HttpResponse
 
 from ..models import StorageModel
 
@@ -26,7 +26,6 @@ def get_storage_core(request: HttpRequest) -> List[StorageModel]:
     - List[StorageModel]: A list of StorageModel objects sorted by the name field, serialized using the StorageModelSerializer class.
 
     """
-    
     user = request.user
     storage = StorageModel.objects.filter(user=user).order_by("name")
     return StorageModelSerializer(storage, many=True)

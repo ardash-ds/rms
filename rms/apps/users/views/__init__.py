@@ -1,5 +1,5 @@
-from .users import sign_in as SignInView
+from .users import sign_up
 
 __all__ = (
-    'SignInView',
+    'sign_up',
 )

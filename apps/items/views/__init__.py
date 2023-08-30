@@ -1,6 +1,6 @@
-from .items import get_items as GetItemsView
+from .items import get_items_user
 
 
 __all__ = (
-    'GetItemsView',
+    'get_items_user',
 )

@@ -16,7 +16,7 @@ from ..serializers import (
 
 # =============================================GET=============================================
 
-def get_storage_core(request: HttpRequest) -> List[StorageModel]:
+def get_storage_user_core(request: HttpRequest) -> List[StorageModel]:
     """Returns a list of BoardColumnModel objects that belong to the request.users
 
     Parameters:
@@ -26,8 +26,7 @@ def get_storage_core(request: HttpRequest) -> List[StorageModel]:
     - List[StorageModel]: A list of StorageModel objects sorted by the name field, serialized using the StorageModelSerializer class.
 
     """
-    user = request.user
-    storage = StorageModel.objects.filter(user=user).order_by("name")
+    storage = StorageModel.objects.filter(user=request.user).order_by("name")
     return StorageModelSerializer(storage, many=True)
 
 

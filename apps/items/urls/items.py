@@ -1,12 +1,12 @@
 from django.urls import path
 
-from ..views import GetItemsView
+from ..views import get_items_user
 
 
 urlpatterns = [
     path(
         route='',
-        view=GetItemsView,
+        view=get_items_user,
         name='get_items',
     ),
 ]

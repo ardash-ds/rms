@@ -17,5 +17,5 @@ from ..serializers import (
 # =============================================GET=============================================
 
 def get_category_core(request: HttpRequest) -> List[CategoryModel]:
-    categories = CategoryModel.objects.all()
+    categories = CategoryModel.objects.all().order_by("name")
     return CategoryModelSerializer(categories, many=True)

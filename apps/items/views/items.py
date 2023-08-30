@@ -4,13 +4,14 @@ from drf_spectacular.utils import (
     OpenApiParameter,
 )
 
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework import status
 from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
 
 from django.http import HttpRequest, HttpResponse
 
-from ..core import get_item_core
+from ..core import get_items_user_core
 from ..serializers import (
     ItemModelSerializer,
 )
@@ -29,6 +30,7 @@ from ..serializers import (
     },
 )
 @api_view(['GET'])
-def get_items(request: HttpRequest) -> HttpResponse:
-    response = get_item_core(request)
+@permission_classes([IsAuthenticated])
+def get_items_user(request: HttpRequest) -> HttpResponse:
+    response = get_items_user_core(request)
     return Response(response.data)

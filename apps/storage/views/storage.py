@@ -11,7 +11,7 @@ from rest_framework.permissions import IsAuthenticated
 
 from django.http import HttpRequest, HttpResponse
 
-from ..core import get_storage_core, create_storage_core
+from ..core import get_storage_user_core, create_storage_core
 from ..serializers import (
     StorageCreationRequestSerializer,
     StorageModelSerializer
@@ -37,8 +37,8 @@ from ..serializers import (
 )
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
-def get_storage(request: HttpRequest) -> HttpResponse:
-    response = get_storage_core(request)
+def get_storage_user(request: HttpRequest) -> HttpResponse:
+    response = get_storage_user_core(request)
     return Response(response.data)
 
 

@@ -17,10 +17,11 @@ from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+print(BASE_DIR)
 
 # Чтение файлов переменных окружения Python
 env = environ.Env()
-environ.Env.read_env(os.path.join(BASE_DIR.resolve().parent, '.env'))
+environ.Env.read_env(os.path.join(BASE_DIR.resolve(), '.env'))
 
 
 # Quick-start development settings - unsuitable for production
@@ -58,9 +59,7 @@ INSTALLED_APPS = [
     
     "corsheaders",
     'drf_spectacular',
-    # 'django_mptt_admin',
     'django_filters',
-    # 'mptt',
     'rest_framework',
     'rest_framework_simplejwt.token_blacklist',
 
@@ -68,7 +67,7 @@ INSTALLED_APPS = [
     'apps.items',
     'apps.storage',
     'apps.users',
-    # 'obj_card',
+    'fixtures',
 ]
 
 MIDDLEWARE = [

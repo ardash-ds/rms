@@ -1,6 +1,11 @@
 from django.test import Client
 from django.urls import reverse_lazy
 
+from rest_framework.test import APIClient
+from rest_framework_simplejwt.tokens import RefreshToken
+
+from apps.users.models import UserModel
+
 
 class TestClientLoginService:
     """A class that provides different user roles for testing client login functionality.
@@ -12,7 +17,7 @@ class TestClientLoginService:
     
     def __init__(self):
         """Initializes the TestClientLoginService with a Django test client and the paths for sign in and sign up."""
-        self.client = Client()
+        self.client = APIClient()
         self.sign_in_path = reverse_lazy("sign_in")
 
     def unauth(self):
@@ -20,7 +25,7 @@ class TestClientLoginService:
         Returns:
             Client: The unauthenticated Django test client.
         """
-        return Client()
+        return APIClient()
     
     def auth(self):
         """
@@ -31,14 +36,8 @@ class TestClientLoginService:
             "email": "admin@admin.ru",
             "password": "1234",
         }
-        # data = {
-        #     "email": "user1@example.com",
-        #     "password": "qwerty1234",
-        # }
-        self.client.post(
-            path=self.sign_in_path, 
-            data=data, 
-            content_type="application/json"
-        )
+        user = UserModel.objects.create_user(username='admin', email='user1@example.com', password='qwerty1234')
+        refresh = RefreshToken.for_user(user)
+        self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {refresh.access_token}')
         return self.client
     

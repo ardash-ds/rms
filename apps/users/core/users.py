@@ -13,10 +13,8 @@ from django.http import HttpRequest
 from ..serializers import UserRegistrationRequestSerializer
 from ..models import UserModel
 
-from ..services import UserManagerService
 
 # =============================================POST=============================================
-
 
 @transaction.atomic
 def sign_up_core(request: HttpRequest) -> None:

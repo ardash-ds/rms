@@ -11,18 +11,11 @@ from rest_framework.permissions import AllowAny
 
 from django.http import HttpResponse, HttpRequest
 
-from ..core import sign_in_core
-
+from ..core import sign_in_core, sign_up_core
 from ..serializers import (
     UserRegistrationRequestSerializer,
 )
-
-from ..services import (
-    GetTokenHttpResponseService,
-    GetLogoutHttpResponse,
-)
-
-from ..core import sign_up_core
+from ..services import get_tokens_for_user
 
 
 # =============================================POST=============================================
@@ -45,23 +38,21 @@ from ..core import sign_up_core
     ],
 )
 @api_view(["POST"])
-@permission_classes([AllowAny])
 def sign_up(request: HttpRequest) -> HttpResponse:
     sign_up_core(request=request)
     return HttpResponse(status=201)
 
-# @extend_schema(
-#     description="WORKS: Take user's email and password and return 'access' and 'refresh' tokens in cookies",
-#     request=UserRegistrationRequestSerializer,
-#     methods=["POST"],
-#     responses={
-#         200: OpenApiResponse(description="Successfully registrated."),
-#         500: OpenApiResponse(description="Error: Internal server error"),
-#     },
-# )
-# @api_view(['POST'])
-# @permission_classes([AllowAny])
-# def sign_in(request: HttpRequest) -> HttpResponse:
-#     user = sign_in_core(request=request)
-#     return GetTokenHttpResponseService(user)
+@extend_schema(
+    description="WORKS: Take user's email and password and return 'access' and 'refresh' tokens in cookies",
+    request=UserRegistrationRequestSerializer,
+    methods=["POST"],
+    responses={
+        200: OpenApiResponse(description="Successfully registrated."),
+        500: OpenApiResponse(description="Error: Internal server error"),
+    },
+)
+@api_view(['POST'])
+def sign_in(request: HttpRequest) -> HttpResponse:
+    user = sign_in_core(request=request)
+    return get_tokens_for_user(user)
 

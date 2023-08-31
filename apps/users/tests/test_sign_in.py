@@ -1,8 +1,4 @@
 import json
-from typing import List
-
-from django.test import Client
-from django.urls import reverse_lazy
 
 from django.test import TestCase
 from django.urls import reverse

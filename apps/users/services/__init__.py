@@ -1,12 +1,5 @@
-from .auth import (
-    get_token_http_reponse as GetTokenHttpResponseService,
-    get_logout_http_response as GetLogoutHttpResponse,
-)
-from .user import UserManager as UserManagerService
-
+from .users import get_tokens_for_user
 
 __all__ = (
-    'GetTokenHttpResponseService',
-    'GetLogoutHttpResponse',
-    'UserManagerService',
+    "get_tokens_for_user",
 )

@@ -18,7 +18,7 @@ class UserModel(auth_models.AbstractUser, auth_models.PermissionsMixin):
     created_at = models.DateTimeField(auto_now_add=True)
     
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = []
+    REQUIRED_FIELDS = ['username']
 
     objects = auth_models.UserManager()
 

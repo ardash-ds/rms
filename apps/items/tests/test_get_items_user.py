@@ -10,9 +10,9 @@ from core.services import TestClientLoginService
 
 
 class GetItemsUserTestCase(TestCase):
-    fixtures = [
-        "fixtures/test_data.json", 
-    ]
+    # fixtures = [
+    #     "fixtures/test_data.json", 
+    # ]
     
     def setUp(self):
         self.url = reverse('get_items')

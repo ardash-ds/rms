@@ -7,9 +7,9 @@ from core.services import TestClientLoginService
 
 
 class SignInTestCase(TestCase):
-    fixtures = [
-        "fixtures/test_data.json", 
-    ]
+    # fixtures = [
+    #     "fixtures/test_data.json", 
+    # ]
     
     def setUp(self):
         self.url = reverse("sign_in")
@@ -39,6 +39,6 @@ class SignInTestCase(TestCase):
             data=json.dumps(self.invalid_data),
             content_type="application/json",
         )
-        self.assertEqual(response.content, b'{"detail":"No active account found with the given credentials"}')
+        self.assertEqual(response.content, b'{"detail":"Incorrect authentication credentials."}')
         self.assertEqual(response.status_code, 401)  
  

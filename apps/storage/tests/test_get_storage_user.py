@@ -10,10 +10,6 @@ from core.services import TestClientLoginService
 
 
 class GetStorageUserTestCase(TestCase):
-    # fixtures = [
-    #     "fixtures/test_data.json", 
-    # ]
-    
     def setUp(self):
         self.url = reverse('get_storage')
         self.unauth_user = TestClientLoginService().unauth()

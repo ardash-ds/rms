@@ -1,0 +1,37 @@
+[
+    {
+        "model": "categories.categorymodel",
+        "pk": 1,
+        "fields": {
+            "name": "Category1"
+        }
+    },
+    {
+        "model": "categories.categorymodel",
+        "pk": 2,
+        "fields": {
+            "name": "Category2"
+        }
+    },
+    {
+        "model": "categories.categorymodel",
+        "pk": 3,
+        "fields": {
+            "name": "Category3"
+        }
+    },
+    {
+        "model": "categories.categorymodel",
+        "pk": 4,
+        "fields": {
+            "name": "Category4"
+        }
+    },
+    {
+        "model": "categories.categorymodel",
+        "pk": 5,
+        "fields": {
+            "name": "Categoty5"
+        }
+    }
+]

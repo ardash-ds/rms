@@ -7,10 +7,6 @@ from core.services import TestClientLoginService
 
 
 class SignInTestCase(TestCase):
-    # fixtures = [
-    #     "fixtures/test_data.json", 
-    # ]
-    
     def setUp(self):
         self.url = reverse("sign_in")
         self.unauth_user = TestClientLoginService().unauth()

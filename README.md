@@ -41,7 +41,7 @@ python manage.py migrate
 6. Заполните бд тестовыми данными
 
 ```
-python manage.py loaddata ./fixtures/test_data.json
+python manage.py entity_population
 ```
 
 7. Запуск сервера

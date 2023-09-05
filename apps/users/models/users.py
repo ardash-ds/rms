@@ -1,11 +1,8 @@
-from django.contrib.auth import (
-    models as auth_models,
-    validators,
-)
+from django.contrib.auth import models as auth_models
 from django.db import models
 
 
-class UserModel(auth_models.AbstractUser, auth_models.PermissionsMixin):
+class UserModel(auth_models.AbstractUser):
     email = models.EmailField(
         max_length=50,
         unique=True,
@@ -20,7 +17,7 @@ class UserModel(auth_models.AbstractUser, auth_models.PermissionsMixin):
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']
 
-    objects = auth_models.UserManager()
+    # objects = auth_models.UserManager
 
     def __str__(self):
         return self.email

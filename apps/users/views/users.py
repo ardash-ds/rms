@@ -11,14 +11,13 @@ from rest_framework.permissions import AllowAny
 
 from django.http import HttpResponse, HttpRequest
 
-from ..core import sign_in_core, sign_up_core
+from ..core import refresh_token_validation_core, sign_in_core, sign_up_core
 from ..serializers import (
     UserRegistrationRequestSerializer,
 )
 from ..services import (
     get_tokens_for_user, 
     get_token_http_reponse,
-    refresh_token_validation_core,
 )
 
 
@@ -54,6 +53,9 @@ def sign_up(request: HttpRequest) -> HttpResponse:
         200: OpenApiResponse(description="Successfully registrated."),
         500: OpenApiResponse(description="Error: Internal server error"),
     },
+    tags=[
+        "users",
+    ],
 )
 @api_view(['POST'])
 def sign_in(request: HttpRequest) -> HttpResponse:
@@ -69,6 +71,9 @@ def sign_in(request: HttpRequest) -> HttpResponse:
         200: OpenApiResponse(description="Successfully registrated."),
         500: OpenApiResponse(description="Error: Internal server error"),
     },
+    tags=[
+        "users",
+    ],
 )
 @api_view(['POST'])
 def sign_in_cookies(request: HttpRequest) -> HttpResponse:
@@ -87,11 +92,11 @@ def sign_in_cookies(request: HttpRequest) -> HttpResponse:
         500: OpenApiResponse(description="Error: Internal server error"),
     },
     tags=[
-        "auth",
+        "users",
     ],
 )
 @api_view(["POST"])
-def refresh_token_(request: HttpRequest) -> HttpResponse:
+def refresh_token_cookies(request: HttpRequest) -> HttpResponse:
     validated_data = refresh_token_validation_core(request=request)
     return get_token_http_reponse(
         user=request.user, refresh_token=validated_data.data["refresh"]

@@ -24,6 +24,13 @@ from ..serializers import (
 @extend_schema(
     summary='WORKS: storage',
     description='Returns a list of all storage the user',
+    parameters=[
+        OpenApiParameter(
+            name="item",
+            required=False,
+            type=int,
+        ),
+    ],
     methods=["GET"],
     request=None,
     responses={

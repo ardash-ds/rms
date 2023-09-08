@@ -1,7 +1,17 @@
 [
     {
         "model": "users.usermodel",
-        "pk": 3,
+        "pk": 1,
+        "fields": {
+            "password": "qwerty1234",
+            "username": "user1@example.com",
+            "email": "user1@example.com"
+
+        }
+    },
+    {
+        "model": "users.usermodel",
+        "pk": 2,
         "fields": {
             "password": "qwerty1234",
             "username": "user2@example.com",
@@ -10,21 +20,11 @@
     },
     {
         "model": "users.usermodel",
-        "pk": 4,
+        "pk": 3,
         "fields": {
             "password": "qwerty1234",
             "username": "user3@example.com",
             "email": "user3@example.com"
-        }
-    },
-    {
-        "model": "users.usermodel",
-        "pk": 5,
-        "fields": {
-            "password": "qwerty1234",
-            "username": "user1@example.com",
-            "email": "user1@example.com"
-
         }
     }
 ]

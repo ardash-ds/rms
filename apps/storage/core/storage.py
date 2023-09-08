@@ -26,7 +26,11 @@ def get_storage_user_core(request: HttpRequest) -> List[StorageModel]:
     - List[StorageModel]: A list of StorageModel objects sorted by the name field, serialized using the StorageModelSerializer class.
 
     """
-    storage = StorageModel.objects.filter(user=request.user).order_by("name")
+    item = request.GET.get('item')
+    if item:
+        storage = StorageModel.objects.filter(item_storage__user__id=request.user.id).order_by("name")
+    else:
+        storage = StorageModel.objects.filter(user__id=request.user.id).order_by("name")
     return StorageModelSerializer(storage, many=True)
 
 

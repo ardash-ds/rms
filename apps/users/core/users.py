@@ -10,7 +10,10 @@ from django.db import transaction
 from django.forms import ValidationError
 from django.http import HttpRequest
 
-from ..serializers import UserRegistrationRequestSerializer
+from ..serializers import (
+    UserRegistrationRequestSerializer, 
+    UserRefreshSerializer,
+)
 from ..models import UserModel
 
 
@@ -58,3 +61,11 @@ def sign_in_core(request: HttpRequest) -> UserModel:
     except UserModel.DoesNotExist:
         raise AuthenticationFailed()
     return user
+
+
+def refresh_token_validation_core(request: HttpRequest) -> str:
+    data = {"refresh": request.COOKIES.get('refresh')}
+    serialized_data = UserRefreshSerializer(data=data)
+    serialized_data.is_valid(raise_exception=True)
+    return serialized_data
+    

@@ -15,7 +15,11 @@ from ..core import sign_in_core, sign_up_core
 from ..serializers import (
     UserRegistrationRequestSerializer,
 )
-from ..services import get_tokens_for_user
+from ..services import (
+    get_tokens_for_user, 
+    get_token_http_reponse,
+    refresh_token_validation_core,
+)
 
 
 # =============================================POST=============================================
@@ -43,7 +47,7 @@ def sign_up(request: HttpRequest) -> HttpResponse:
     return HttpResponse(status=201)
 
 @extend_schema(
-    description="WORKS: Take user's email and password and return 'access' and 'refresh' tokens in cookies",
+    description="WORKS: Take user's email and password and return 'access' and 'refresh' tokens",
     request=UserRegistrationRequestSerializer,
     methods=["POST"],
     responses={
@@ -56,3 +60,40 @@ def sign_in(request: HttpRequest) -> HttpResponse:
     user = sign_in_core(request=request)
     return get_tokens_for_user(user)
 
+
+@extend_schema(
+    description="WORKS: Take user's email and password and return 'access' and 'refresh' tokens in cookies",
+    request=UserRegistrationRequestSerializer,
+    methods=["POST"],
+    responses={
+        200: OpenApiResponse(description="Successfully registrated."),
+        500: OpenApiResponse(description="Error: Internal server error"),
+    },
+)
+@api_view(['POST'])
+def sign_in_cookies(request: HttpRequest) -> HttpResponse:
+    user = sign_in_core(request=request)
+    return get_token_http_reponse(user)
+
+
+@extend_schema(
+    summary="WORKS: Refresh access token",
+    description="Take user's 'refresh' token from cookies, update 'access' token",
+    methods=["POST"],
+    request=None,
+    responses={
+        200: OpenApiResponse(description="Successfully refreshed token."),
+        401: OpenApiResponse(description="Error: Unauthorized"),
+        500: OpenApiResponse(description="Error: Internal server error"),
+    },
+    tags=[
+        "auth",
+    ],
+)
+@api_view(["POST"])
+def refresh_token_(request: HttpRequest) -> HttpResponse:
+    validated_data = refresh_token_validation_core(request=request)
+    return get_token_http_reponse(
+        user=request.user, refresh_token=validated_data.data["refresh"]
+    )
+    

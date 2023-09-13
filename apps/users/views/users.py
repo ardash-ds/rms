@@ -41,6 +41,7 @@ from ..services import (
     ],
 )
 @api_view(["POST"])
+@permission_classes([AllowAny])
 def sign_up(request: HttpRequest) -> HttpResponse:
     sign_up_core(request=request)
     return HttpResponse(status=201)
@@ -58,6 +59,7 @@ def sign_up(request: HttpRequest) -> HttpResponse:
     ],
 )
 @api_view(['POST'])
+@permission_classes([AllowAny])
 def sign_in(request: HttpRequest) -> HttpResponse:
     user = sign_in_core(request=request)
     return get_tokens_for_user(user)
@@ -76,6 +78,7 @@ def sign_in(request: HttpRequest) -> HttpResponse:
     ],
 )
 @api_view(['POST'])
+@permission_classes([AllowAny])
 def sign_in_cookies(request: HttpRequest) -> HttpResponse:
     user = sign_in_core(request=request)
     return get_token_http_reponse(user)
@@ -96,6 +99,7 @@ def sign_in_cookies(request: HttpRequest) -> HttpResponse:
     ],
 )
 @api_view(["POST"])
+@permission_classes([AllowAny])
 def refresh_token_cookies(request: HttpRequest) -> HttpResponse:
     validated_data = refresh_token_validation_core(request=request)
     return get_token_http_reponse(

@@ -46,7 +46,6 @@ def get_token_http_reponse(user, refresh_token: str = None) -> HttpResponse:
         token = RefreshToken(token=refresh_token)
     else:
         token = RefreshToken.for_user(user)
-        http_response.set_cookie("refresh", str(token), httponly=True)
-    http_response.set_cookie("access", str(token.access_token), httponly=True)
-    print('access', token.access_token)
+        http_response.set_cookie("refresh", str(token), httponly=True, samesite="None", secure=False)
+    http_response.set_cookie("access", str(token.access_token), httponly=True, secure=False)
     return http_response

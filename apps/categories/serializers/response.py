@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
 
-class CategorySerializer(serializers.Serializer):
+class CategoryResponseSerializer(serializers.Serializer):
     name = serializers.CharField()
     

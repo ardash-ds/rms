@@ -1,5 +1,5 @@
-from .model import CategorySerializer as CategoryModelSerializer
-from .response import CategorySerializer as CategoryResponseSerializer
+from .model import CategoryModelSerializer
+from .response import CategoryResponseSerializer
 
 
 __all__ = (

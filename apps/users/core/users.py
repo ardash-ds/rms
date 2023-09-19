@@ -1,13 +1,7 @@
-import requests
-
 from rest_framework.parsers import JSONParser
-from rest_framework.utils import json
-from rest_framework import exceptions
 from rest_framework.exceptions import AuthenticationFailed
 
-from django.contrib.auth.hashers import make_password
 from django.db import transaction
-from django.forms import ValidationError
 from django.http import HttpRequest
 
 from ..serializers import (

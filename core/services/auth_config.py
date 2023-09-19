@@ -1,6 +1,9 @@
 from django.conf import settings
+
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework_simplejwt.exceptions import AuthenticationFailed, InvalidToken
+from rest_framework.permissions import IsAuthenticated as IsAuthenticated_
+
 from drf_spectacular.extensions import OpenApiAuthenticationExtension
 
 
@@ -81,3 +84,9 @@ class CookiesAuthenticationExtension(OpenApiAuthenticationExtension):
             "description": "Cookie-based authentication by 'access' token",
         }
         
+
+class IsAuthenticated(IsAuthenticated_):
+    
+    def has_permission(self, request, view):
+        return request.user is not None
+    

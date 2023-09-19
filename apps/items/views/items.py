@@ -26,7 +26,12 @@ from ..serializers import (
     methods=["GET"],
     request=None,
     responses={
-        200: OpenApiResponse(response=ItemModelSerializer(many=True))
+        200: OpenApiResponse(response=ItemModelSerializer(many=True)),
+        400: OpenApiResponse(description="Error: Bad request"),
+        401: OpenApiResponse(description="Error: Unauthorized"),
+        404: OpenApiResponse(description="Error: Not found"),
+        422: OpenApiResponse(description="Error: Unprocessable entity"),
+        500: OpenApiResponse(description="Error: Internal server error"),
     },
 )
 @api_view(['GET'])

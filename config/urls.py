@@ -15,7 +15,7 @@ urlpatterns = [
     path('', health_check),
     path('admin/', admin.site.urls),
     path(
-        'categoris/',
+        'categories/',
         include('apps.categories.urls.categories'),
         name='categories',
     ), 

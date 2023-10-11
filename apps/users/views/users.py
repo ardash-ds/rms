@@ -17,7 +17,7 @@ from ..serializers import (
 )
 from ..services import (
     get_tokens_for_user, 
-    get_token_http_reponse,
+    get_token_http_response,
 )
 
 
@@ -81,7 +81,7 @@ def sign_in(request: HttpRequest) -> HttpResponse:
 @permission_classes([AllowAny])
 def sign_in_cookies(request: HttpRequest) -> HttpResponse:
     user = sign_in_core(request=request)
-    return get_token_http_reponse(user)
+    return get_token_http_response(user)
 
 
 @extend_schema(
@@ -102,7 +102,7 @@ def sign_in_cookies(request: HttpRequest) -> HttpResponse:
 @permission_classes([AllowAny])
 def refresh_token_cookies(request: HttpRequest) -> HttpResponse:
     validated_data = refresh_token_validation_core(request=request)
-    return get_token_http_reponse(
+    return get_token_http_response(
         user=request.user, refresh_token=validated_data.data["refresh"]
     )
     

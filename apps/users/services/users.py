@@ -30,7 +30,7 @@ def get_tokens_for_user(user):
     )
     
     
-def get_token_http_reponse(user, refresh_token: str = None) -> HttpResponse:
+def get_token_http_response(user, refresh_token: str = None) -> HttpResponse:
     """Generates and returns an HTTP response that includes the access and refresh tokens for the given user.
 
     Arguments:
@@ -46,6 +46,6 @@ def get_token_http_reponse(user, refresh_token: str = None) -> HttpResponse:
         token = RefreshToken(token=refresh_token)
     else:
         token = RefreshToken.for_user(user)
-        http_response.set_cookie("refresh", str(token), httponly=True, samesite="None", secure=False)
-    http_response.set_cookie("access", str(token.access_token), httponly=True, secure=False)
+        http_response.set_cookie("refresh", str(token), httponly=True)
+    http_response.set_cookie("access", str(token.access_token), httponly=True)
     return http_response

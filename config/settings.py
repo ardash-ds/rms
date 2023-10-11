@@ -70,10 +70,9 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-
+    'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',
-    'django.middleware.security.SecurityMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -196,11 +195,6 @@ ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 5   # ...дней на подтверж
 LOGIN_REDIRECT_URL = '/obj_list/'
 LOGIN_URL = '/accounts/login/'
 
-# Переопределяем формы allauth
-ACCOUNT_FORMS = {
-    'login': 'obj_card.forms.NewLoginForm',
-    'signup': 'obj_card.forms.NewSignupForm',
-}
 
 # настройки почты для отпраки писем
 EMAIL_HOST = env.str('EMAIL_HOST')
@@ -219,9 +213,9 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'core.services.auth_config.CookiesAuthentication',
-    ),
+    # 'DEFAULT_AUTHENTICATION_CLASSES': (
+    #     'core.services.auth_config.CookiesAuthentication',
+    # ),
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated',
     ],
@@ -237,6 +231,9 @@ SPECTACULAR_SETTINGS = {
     'DESCRIPTION': 'Card file of storage places for user\'s belongings',
     'VERSION': '1.0.0',
     'SERVE_INCLUDE_SCHEMA': False,
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ],
     # 'DEFAULT_AUTHENTICATION_CLASSES': [
     #     'core.services.auth_config.CookiesAuthentication',
     # ],
@@ -291,17 +288,20 @@ SIMPLE_JWT = {
 # CSRF cookie
 CSRF_COOKIE_SECURE = False
 CSRF_COOKIE_HTTPONLY = True
-CSRF_TRUSTED_ORIGINS = []
+CSRF_TRUSTED_ORIGINS = ['http://*', 'https://codesandbox.io/']
 CSRF_COOKIE_SAMESITE = "None"
 
 # Session cookie
+SESSION_ENGINE = 'django.contrib.sessions.backends.signed_cookies'
+SESSION_COOKIE_NAME = 'sessionid'
 SESSION_COOKIE_SECURE = False 
-SESSION_COOKIE_SAMESITE = "None"
+SESSION_COOKIE_SAMESITE = 'None'
+SESSION_COOKIE_HTTPONLY = True
 
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # Configuration CORS
-# CORS_ALLOWED_ORIGINS = env.list("CORS_ALLOWED_ORIGINS", default = [])
+CORS_ALLOWED_ORIGINS = ['http://*', 'http://127.0.0.3:8000', 'https://codesandbox.io']
 CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
 

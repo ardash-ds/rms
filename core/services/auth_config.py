@@ -35,6 +35,7 @@ class CookiesAuthentication(JWTAuthentication):
     """
     def authenticate(self, request):
         token = request.COOKIES.get(settings.REST_FRAMEWORK['JWT_AUTH_COOKIE'])
+        
         if token is not None:
             return self.get_user_token_pair(token)
         return None, None
@@ -88,5 +89,5 @@ class CookiesAuthenticationExtension(OpenApiAuthenticationExtension):
 class IsAuthenticated(IsAuthenticated_):
     
     def has_permission(self, request, view):
-        return request.user is not None
+        return bool(request.user is not None)
     

@@ -11,7 +11,7 @@ from ..models import StorageModel
 from ..serializers import (
     StorageCreationRequestSerializer,
     StorageModelSerializer,
-    StorageModelResponseSerializer,
+    StorageResponseSerializer,
 )
 
 
@@ -25,11 +25,11 @@ def get_storage_all_core(request: HttpRequest) -> List[StorageModel]:
 
     Returns:
     - List[StorageModel]: A list of all user StorageModel objects, sorted by name field.
-      Serialized using the StorageModelResponseSerializer class.
+      Serialized using the StorageResponseSerializer class.
 
     """
     storage = StorageModel.objects.filter(user__id=request.user.id).order_by("name")
-    return StorageModelResponseSerializer(storage, many=True)
+    return StorageResponseSerializer(storage, many=True)
 
 
 def get_storage_with_things_core(request: HttpRequest) -> List[StorageModel]:
@@ -40,11 +40,11 @@ def get_storage_with_things_core(request: HttpRequest) -> List[StorageModel]:
 
     Returns:
     - List[StorageModel]: A list of StorageModel objects containing ItemModel 
-      objects, sorted by name field. Serialized using the StorageModelResponseSerializer class.
+      objects, sorted by name field. Serialized using the StorageResponseSerializer class.
 
     """
     storage = StorageModel.objects.filter(item_storage__user__id=request.user.id).order_by("name")
-    return StorageModelResponseSerializer(storage, many=True)
+    return StorageResponseSerializer(storage, many=True)
 
 
 # =============================================POST============================================

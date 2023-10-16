@@ -14,6 +14,7 @@ from django.http import HttpRequest, HttpResponse
 from ..core import get_items_user_core
 from ..serializers import (
     ItemModelSerializer,
+    ItemResponseSerializer,
 )
 
 
@@ -25,7 +26,7 @@ from ..serializers import (
     description='Returns a list of user items',
     methods=["GET"],
     responses={
-        200: OpenApiResponse(response=ItemModelSerializer(many=True)),
+        200: OpenApiResponse(response=ItemResponseSerializer(many=True)),
         400: OpenApiResponse(description="Error: Bad request"),
         401: OpenApiResponse(description="Error: Unauthorized"),
         404: OpenApiResponse(description="Error: Not found"),

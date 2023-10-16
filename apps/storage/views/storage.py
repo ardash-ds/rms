@@ -19,7 +19,7 @@ from ..core import (
 from ..serializers import (
     StorageCreationRequestSerializer,
     StorageModelSerializer,
-    StorageModelResponseSerializer,
+    StorageResponseSerializer,
 )
 
 
@@ -32,7 +32,7 @@ from ..serializers import (
     methods=["GET"],
     request=None,
     responses={
-        200: OpenApiResponse(response=StorageModelResponseSerializer(many=True)),
+        200: OpenApiResponse(response=StorageResponseSerializer(many=True)),
         400: OpenApiResponse(description="Error: Bad request"),
         401: OpenApiResponse(description="Error: Unauthorized"),
         404: OpenApiResponse(description="Error: Not found"),
@@ -53,7 +53,7 @@ def get_storage_all(request: HttpRequest) -> HttpResponse:
     methods=["GET"],
     request=None,
     responses={
-        200: OpenApiResponse(response=StorageModelResponseSerializer(many=True)),
+        200: OpenApiResponse(response=StorageResponseSerializer(many=True)),
         400: OpenApiResponse(description="Error: Bad request"),
         401: OpenApiResponse(description="Error: Unauthorized"),
         404: OpenApiResponse(description="Error: Not found"),

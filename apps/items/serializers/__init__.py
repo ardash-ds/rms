@@ -1,6 +1,8 @@
-from .model import ItemSerializer as ItemModelSerializer
+from .model import ItemModelSerializer
+from .response import ItemResponseSerializer
 
 
 __all__ = (
     'ItemModelSerializer',
+    'ItemResponseSerializer',
 )

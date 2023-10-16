@@ -11,10 +11,15 @@ from rest_framework.permissions import IsAuthenticated
 
 from django.http import HttpRequest, HttpResponse
 
-from ..core import get_storage_user_core, create_storage_core
+from ..core import (
+    create_storage_core,
+    get_storage_all_core,
+    get_storage_with_things_core,
+)
 from ..serializers import (
     StorageCreationRequestSerializer,
-    StorageModelSerializer
+    StorageModelSerializer,
+    StorageModelResponseSerializer,
 )
 
 
@@ -22,19 +27,12 @@ from ..serializers import (
 
 
 @extend_schema(
-    summary='WORKS: storage',
+    summary='WORKS: storage all',
     description='Returns a list of all storage the user',
-    parameters=[
-        OpenApiParameter(
-            name="item",
-            required=False,
-            type=int,
-        ),
-    ],
     methods=["GET"],
     request=None,
     responses={
-        200: OpenApiResponse(response=StorageModelSerializer(many=True)),
+        200: OpenApiResponse(response=StorageModelResponseSerializer(many=True)),
         400: OpenApiResponse(description="Error: Bad request"),
         401: OpenApiResponse(description="Error: Unauthorized"),
         404: OpenApiResponse(description="Error: Not found"),
@@ -44,8 +42,29 @@ from ..serializers import (
 )
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
-def get_storage_user(request: HttpRequest) -> HttpResponse:
-    response = get_storage_user_core(request)
+def get_storage_all(request: HttpRequest) -> HttpResponse:
+    response = get_storage_all_core(request)
+    return Response(response.data)
+
+
+@extend_schema(
+    summary='WORKS: storage with things',
+    description='Returns a list of storage with things the user',
+    methods=["GET"],
+    request=None,
+    responses={
+        200: OpenApiResponse(response=StorageModelResponseSerializer(many=True)),
+        400: OpenApiResponse(description="Error: Bad request"),
+        401: OpenApiResponse(description="Error: Unauthorized"),
+        404: OpenApiResponse(description="Error: Not found"),
+        422: OpenApiResponse(description="Error: Unprocessable entity"),
+        500: OpenApiResponse(description="Error: Internal server error"),
+    },
+)
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_storage_with_things(request: HttpRequest) -> HttpResponse:
+    response = get_storage_with_things_core(request)
     return Response(response.data)
 
 

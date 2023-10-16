@@ -11,27 +11,40 @@ from ..models import StorageModel
 from ..serializers import (
     StorageCreationRequestSerializer,
     StorageModelSerializer,
+    StorageModelResponseSerializer,
 )
 
 
 # =============================================GET=============================================
 
-def get_storage_user_core(request: HttpRequest) -> List[StorageModel]:
-    """Returns a list of BoardColumnModel objects that belong to the request.users
+def get_storage_all_core(request: HttpRequest) -> List[StorageModel]:
+    """Returns a list of StorageModel objects that belong to the request.users
 
     Parameters:
     - request (HttpRequest): A Django HttpRequest object.
 
     Returns:
-    - List[StorageModel]: A list of StorageModel objects sorted by the name field, serialized using the StorageModelSerializer class.
+    - List[StorageModel]: A list of all user StorageModel objects, sorted by name field.
+      Serialized using the StorageModelResponseSerializer class.
 
     """
-    item = request.GET.get('item')
-    if item:
-        storage = StorageModel.objects.filter(item_storage__user__id=request.user.id).order_by("name")
-    else:
-        storage = StorageModel.objects.filter(user__id=request.user.id).order_by("name")
-    return StorageModelSerializer(storage, many=True)
+    storage = StorageModel.objects.filter(user__id=request.user.id).order_by("name")
+    return StorageModelResponseSerializer(storage, many=True)
+
+
+def get_storage_with_things_core(request: HttpRequest) -> List[StorageModel]:
+    """Returns a list of StorageModel objects that belong to the request.users
+
+    Parameters:
+    - request (HttpRequest): A Django HttpRequest object.
+
+    Returns:
+    - List[StorageModel]: A list of StorageModel objects containing ItemModel 
+      objects, sorted by name field. Serialized using the StorageModelResponseSerializer class.
+
+    """
+    storage = StorageModel.objects.filter(item_storage__user__id=request.user.id).order_by("name")
+    return StorageModelResponseSerializer(storage, many=True)
 
 
 # =============================================POST============================================
@@ -43,7 +56,7 @@ def create_storage_core(request: HttpRequest) -> List[StorageModel]:
     - request (HttpRequest): The HTTP request object.
 
     Returns:
-    - bool: True if the column was created successfully, False otherwise.
+    - None
 
     Raises:
     - ValidationError: If the data provided in the request is not valid.

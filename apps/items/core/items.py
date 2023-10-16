@@ -7,10 +7,13 @@ from django.db import transaction
 from django.http import HttpRequest
 
 from ..models import ItemModel
+from apps.categories.models import CategoryModel
 
 from ..serializers import (
     ItemModelSerializer,
 )
+
+from apps.categories.serializers import CategoryModelSerializer
 
 
 # =============================================GET=============================================

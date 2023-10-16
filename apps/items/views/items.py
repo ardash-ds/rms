@@ -7,7 +7,7 @@ from drf_spectacular.utils import (
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework import status
 from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
 
 from django.http import HttpRequest, HttpResponse
 
@@ -24,7 +24,6 @@ from ..serializers import (
     summary='WORKS: User Items',
     description='Returns a list of user items',
     methods=["GET"],
-    request=None,
     responses={
         200: OpenApiResponse(response=ItemModelSerializer(many=True)),
         400: OpenApiResponse(description="Error: Bad request"),

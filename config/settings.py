@@ -286,22 +286,22 @@ SIMPLE_JWT = {
 }
 
 # CSRF cookie
-CSRF_COOKIE_SECURE = False
-CSRF_COOKIE_HTTPONLY = True
-CSRF_TRUSTED_ORIGINS = ['http://*', 'https://codesandbox.io/']
-CSRF_COOKIE_SAMESITE = "None"
+# CSRF_COOKIE_SECURE = False
+# CSRF_COOKIE_HTTPONLY = True
+# CSRF_TRUSTED_ORIGINS = ['http://*', 'https://codesandbox.io/']
+# CSRF_COOKIE_SAMESITE = "None"
 
 # Session cookie
-SESSION_ENGINE = 'django.contrib.sessions.backends.signed_cookies'
-SESSION_COOKIE_NAME = 'sessionid'
-SESSION_COOKIE_SECURE = False 
-SESSION_COOKIE_SAMESITE = 'None'
-SESSION_COOKIE_HTTPONLY = True
+# SESSION_ENGINE = 'django.contrib.sessions.backends.signed_cookies'
+# SESSION_COOKIE_NAME = 'sessionid'
+# SESSION_COOKIE_SECURE = False 
+# SESSION_COOKIE_SAMESITE = 'None'
+# SESSION_COOKIE_HTTPONLY = True
 
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+# SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # Configuration CORS
-CORS_ALLOWED_ORIGINS = ['http://*', 'http://127.0.0.3:8000', 'https://codesandbox.io']
+CORS_ALLOWED_ORIGINS = ['http://*', 'http://127.0.0.3:8000']
 CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
 

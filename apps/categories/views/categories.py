@@ -34,8 +34,8 @@ from core.services import IsAuthenticated
     },
 )
 @api_view(['GET'])
-@permission_classes([AllowAny])
-# @permission_classes([IsAuthenticated_])
+# @permission_classes([AllowAny])
+@permission_classes([IsAuthenticated_])
 def get_categories(request: HttpRequest) -> HttpResponse:
     response = get_category_core(request)
     return Response(response.data)
@@ -55,8 +55,8 @@ def get_categories(request: HttpRequest) -> HttpResponse:
     },
 )
 @api_view(['GET'])
-@permission_classes([AllowAny])
-# @permission_classes([IsAuthenticated_])
+# @permission_classes([AllowAny])
+@permission_classes([IsAuthenticated_])
 def get_categories_with_things(request: HttpRequest) -> HttpResponse:
     response = get_categories_with_things_core(request)
     return Response(response.data)

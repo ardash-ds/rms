@@ -17,5 +17,5 @@ def get_category_core(request: HttpRequest) -> List[CategoryModel]:
 
 
 def get_categories_with_things_core(request: HttpRequest) -> List[CategoryModel]:
-    categories = CategoryModel.objects.filter(item_category__user__id=request.user.id).order_by("name")
+    categories = CategoryModel.objects.filter(item_category__user__id=request.user.id).distinct().order_by("name")
     return CategoryModelSerializer(categories, many=True)

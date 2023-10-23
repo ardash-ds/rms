@@ -46,11 +46,11 @@ def get_storage_with_things_core(request: HttpRequest) -> List[StorageModel]:
 
 # =============================================POST============================================
 
-def create_storage_core(request: HttpRequest) -> List[StorageModel]:
+def create_storage_core(request: HttpRequest) -> None:
     """Create a new storage.
 
     Parameters:
-    - request (HttpRequest): The HTTP request object.
+    - request (HttpRequest): The HTTP request object containing the user.
 
     Returns:
     - None

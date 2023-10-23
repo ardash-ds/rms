@@ -37,6 +37,7 @@ class ItemModel(models.Model):
     def __str__(self):
         return self.name
 
+
 class ItemImageModel(models.Model):
     image_url = models.ImageField(upload_to='%Y/%m/%d/')
     item = models.ForeignKey(

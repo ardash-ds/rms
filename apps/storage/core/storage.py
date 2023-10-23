@@ -84,7 +84,11 @@ def delete_storage_core(request: HttpRequest, storage_id: int) -> dict:
         dict: A dictionary containing a detail message indicating the success of the deletion.
     """
     
-    storage = get_object_or_404(StorageModel, id=storage_id, user=request.user)
+    storage = get_object_or_404(
+        StorageModel, 
+        id=storage_id, 
+        user__id=request.user.id,
+    )
     storage.delete()
     return {
         "detail": f"Storage (id:{storage_id}) was successfully deleted",

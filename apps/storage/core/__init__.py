@@ -1,5 +1,6 @@
 from .storage import (
     create_storage_core,
+    delete_storage_core,
     get_storage_all_core, 
     get_storage_with_things_core,
 )
@@ -7,6 +8,7 @@ from .storage import (
 
 __all__ = (
     'create_storage_core',
+    'delete_storage_core',
     'get_storage_all_core',
     'get_storage_with_things_core',
 )

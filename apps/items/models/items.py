@@ -26,7 +26,7 @@ class ItemModel(models.Model):
         blank=True, 
         null=True, 
     )
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateField(auto_now_add=True)
     
     class Meta:
         ordering = ['name']

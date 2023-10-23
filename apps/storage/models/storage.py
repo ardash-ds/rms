@@ -18,4 +18,4 @@ class StorageModel(models.Model):
         db_table = 'storage'
 
     def __str__(self):
-        return self.name
+        return f'{self.name} ID: {self.id}'

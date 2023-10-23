@@ -11,7 +11,7 @@ from core.services import TestClientLoginService
 
 class GetStorageUserTestCase(TestCase):
     def setUp(self):
-        self.url = reverse('get_storage')
+        self.url = reverse('get_storage_all')
         self.unauth_user = TestClientLoginService().unauth()
         self.auth_user = TestClientLoginService().auth()
         

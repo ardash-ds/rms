@@ -11,7 +11,7 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 
 from django.http import HttpRequest, HttpResponse
 
-from ..core import get_items_user_core
+from ..core import get_items_user_core, get_item_info_core
 from ..serializers import (
     ItemModelSerializer,
     ItemResponseSerializer,
@@ -38,4 +38,24 @@ from ..serializers import (
 @permission_classes([IsAuthenticated])
 def get_items_user(request: HttpRequest) -> HttpResponse:
     response = get_items_user_core(request)
+    return Response(response.data)
+
+
+@extend_schema(
+    summary='WORKS: Detailed description item',
+    description='Returns a detailed description of the item',
+    methods=["GET"],
+    responses={
+        200: OpenApiResponse(response=ItemResponseSerializer()),
+        400: OpenApiResponse(description="Error: Bad request"),
+        401: OpenApiResponse(description="Error: Unauthorized"),
+        404: OpenApiResponse(description="Error: Not found"),
+        422: OpenApiResponse(description="Error: Unprocessable entity"),
+        500: OpenApiResponse(description="Error: Internal server error"),
+    },
+)
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_item_info(request: HttpRequest, item_id: int) -> HttpResponse:
+    response = get_item_info_core(request, item_id) # отловить ошибку!!!
     return Response(response.data)

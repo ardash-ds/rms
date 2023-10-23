@@ -22,3 +22,8 @@ from apps.categories.serializers import CategoryModelSerializer
 def get_items_user_core(request: HttpRequest) -> List[ItemModel]:
     items = ItemModel.objects.filter(user=request.user)
     return ItemResponseSerializer(items, many=True)
+
+
+def get_item_info_core(request: HttpRequest, item_id: int) -> ItemModel:
+    item = ItemModel.objects.get(id=item_id)
+    return ItemResponseSerializer(item)

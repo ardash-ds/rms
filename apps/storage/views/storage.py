@@ -13,6 +13,7 @@ from django.http import HttpRequest, HttpResponse
 
 from ..core import (
     create_storage_core,
+    delete_storage_core,
     get_storage_all_core,
     get_storage_with_things_core,
 )
@@ -90,3 +91,26 @@ def get_storage_with_things(request: HttpRequest) -> HttpResponse:
 def create_storage(request: HttpRequest) -> HttpResponse:
     response = create_storage_core(request=request)
     return Response(status=status.HTTP_201_CREATED)
+
+
+# =============================================DELETE===========================================
+
+
+@extend_schema(
+    summary="WORKS: Delete storage",
+    description="Takes storage id, user who submitted the deletion request and deletes a storage. ",
+    methods=["DELETE"],
+    responses={
+        200: OpenApiResponse(description="Storage (id:{storage_id}) was successfully deleted"),
+        400: OpenApiResponse(description="Error: Bad request"),
+        401: OpenApiResponse(description="Error: Unauthorized"),
+        404: OpenApiResponse(description="Error: Not found"),
+        422: OpenApiResponse(description="Error: Unprocessable entity"),
+        500: OpenApiResponse(description="Error: Internal server error"),
+    },
+)
+@api_view(["DELETE"])
+@permission_classes([IsAuthenticated])
+def delete_storage(request: HttpRequest, storage_id: int) -> HttpResponse:
+    response = delete_storage_core(request=request, storage_id=storage_id)
+    return Response(response, status=status.HTTP_200_OK)

@@ -5,14 +5,11 @@ from rest_framework.parsers import JSONParser
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import transaction
 from django.http import HttpRequest, HttpResponse
+from django.shortcuts import get_object_or_404
 
 from ..models import StorageModel
 
-from ..serializers import (
-    StorageCreationRequestSerializer,
-    StorageModelSerializer,
-    StorageResponseSerializer,
-)
+from ..serializers import StorageCreationRequestSerializer, StorageModelSerializer, StorageResponseSerializer
 
 
 # =============================================GET=============================================
@@ -69,4 +66,27 @@ def create_storage_core(request: HttpRequest) -> List[StorageModel]:
     serializer.save()
     
     
+# =============================================DELETE============================================
+    
+    
+def delete_storage_core(request: HttpRequest, storage_id: int) -> dict:
+    """Delete storage
+
+    Args:
+        request (HttpRequest): The HTTP request containing user authentication and authorization.
+        storage_id (int): The ID of the storage to be deleted.
+
+    Raises:
+        code: 404 "Not found.". If the specified storage_id or user who submitted the deletion 
+        request do not correspond to existing entities.
+
+    Returns:
+        dict: A dictionary containing a detail message indicating the success of the deletion.
+    """
+    
+    storage = get_object_or_404(StorageModel, id=storage_id, user=request.user)
+    storage.delete()
+    return {
+        "detail": f"Storage (id:{storage_id}) was successfully deleted",
+    }
     

@@ -5,7 +5,16 @@ from apps.items.models import ItemModel
 from apps.users.models import UserModel
 
 
+class ItemModelAdmin(admin.ModelAdmin):
+    class Meta:
+        model = ItemModel
+        fields = ['id', 'name']
+    
+    
+
+
+
 admin.site.register(CategoryModel)
-admin.site.register(ItemModel)
+admin.site.register(ItemModel, ItemModelAdmin)
 admin.site.register(StorageModel)
 admin.site.register(UserModel)

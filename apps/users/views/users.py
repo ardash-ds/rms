@@ -8,11 +8,18 @@ from rest_framework.decorators import (
     permission_classes,
 )
 from rest_framework.permissions import AllowAny
+from rest_framework.response import Response
 
 from django.http import HttpResponse, HttpRequest
 
-from ..core import refresh_token_validation_core, sign_in_core, sign_up_core
+from ..core import (
+    get_user_info_core,
+    refresh_token_validation_core, 
+    sign_in_core, 
+    sign_up_core,
+)
 from ..serializers import (
+    UserInfoResponseSerializer,
     UserRegistrationRequestSerializer,
 )
 from ..services import (
@@ -106,3 +113,24 @@ def refresh_token_cookies(request: HttpRequest) -> HttpResponse:
         user=request.user, refresh_token=validated_data.data["refresh"]
     )
     
+
+# =============================================POST=============================================
+
+    
+@extend_schema(
+    summary="WORKS: User's info",
+    description="Takes id and returns user's info",
+    methods=["GET"],
+    responses={
+        200: OpenApiResponse(response=UserInfoResponseSerializer),
+        400: OpenApiResponse(description="Error: Bad request"),
+        401: OpenApiResponse(description="Error: Unauthorized"),
+        404: OpenApiResponse(description="Error: Not found"),
+        422: OpenApiResponse(description="Error: Unprocessable entity"),
+        500: OpenApiResponse(description="Error: Internal server error"),
+    },
+)
+@api_view(["GET"])
+def get_user_info(request: HttpRequest) -> Response:
+    response = get_user_info_core(request=request)
+    return Response(response.data)

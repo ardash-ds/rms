@@ -5,6 +5,7 @@ from django.db import transaction
 from django.http import HttpRequest
 
 from ..serializers import (
+    UserInfoResponseSerializer,
     UserRegistrationRequestSerializer, 
     UserRefreshSerializer,
 )
@@ -62,4 +63,12 @@ def refresh_token_validation_core(request: HttpRequest) -> str:
     serialized_data = UserRefreshSerializer(data=data)
     serialized_data.is_valid(raise_exception=True)
     return serialized_data
+    
+
+# =============================================GET=============================================
+
+
+def get_user_info_core(request: HttpRequest):
+    user = UserModel.objects.get(id=request.user.id)
+    return UserInfoResponseSerializer(user)
     

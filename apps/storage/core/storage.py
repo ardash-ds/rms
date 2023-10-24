@@ -40,7 +40,7 @@ def get_storage_with_things_core(request: HttpRequest) -> List[StorageModel]:
       objects, sorted by name field. Serialized using the StorageResponseSerializer class.
 
     """
-    storage = StorageModel.objects.filter(item_storage__user__id=request.user.id).order_by("name")
+    storage = StorageModel.objects.filter(item_storage__user__id=request.user.id).order_by("name").distinct()
     return StorageResponseSerializer(storage, many=True)
 
 

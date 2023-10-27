@@ -25,7 +25,6 @@ from ..serializers import (
 
 # =============================================GET=============================================
 
-
 @extend_schema(
     summary='WORKS: User Items',
     description='Returns a list of user items',
@@ -62,7 +61,7 @@ def get_items(request: HttpRequest) -> HttpResponse:
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def get_item_info(request: HttpRequest, item_id: int) -> HttpResponse:
-    response = get_item_info_core(request, item_id) # отловить ошибку!!!
+    response = get_item_info_core(request, item_id)
     return Response(response.data)
 
 
@@ -91,7 +90,6 @@ def create_item(request: HttpRequest) -> HttpResponse:
 
 # =============================================DELETE=============================================
 
-
 @extend_schema(
     summary="Delete Item",
     description="Take item_id and delete item with that id",
@@ -108,8 +106,8 @@ def create_item(request: HttpRequest) -> HttpResponse:
     },
 )
 @api_view(["DELETE"])
-@permission_classes([AllowAny])
-# @permission_classes([IsAuthenticated])
+# @permission_classes([AllowAny])
+@permission_classes([IsAuthenticated])
 def delete_item(request: HttpRequest, item_id: int) -> HttpResponse:
     response = delete_item_core(request=request, item_id=item_id)
     return Response(response, status=status.HTTP_200_OK)

@@ -3,6 +3,7 @@ from rest_framework.exceptions import AuthenticationFailed
 
 from django.db import transaction
 from django.http import HttpRequest
+from django.shortcuts import get_object_or_404
 
 from ..serializers import (
     UserInfoResponseSerializer,
@@ -40,7 +41,8 @@ def sign_in_core(request: HttpRequest) -> UserModel:
     Sign in a user, given their email and password.
 
     Args:
-        request (django.http.HttpRequest): The HTTP request object.
+    - request (HttpRequest): A Django HttpRequest object, containing user 
+      authentication and authorization.
 
     Returns:
         UserModel: Present in database user object.
@@ -59,16 +61,26 @@ def sign_in_core(request: HttpRequest) -> UserModel:
 
 
 def refresh_token_validation_core(request: HttpRequest) -> str:
+    
     data = {"refresh": request.COOKIES.get('refresh')}
     serialized_data = UserRefreshSerializer(data=data)
     serialized_data.is_valid(raise_exception=True)
     return serialized_data
-    
 
 # =============================================GET=============================================
 
-
 def get_user_info_core(request: HttpRequest):
-    user = UserModel.objects.get(id=request.user.id)
-    return UserInfoResponseSerializer(user)
+    """
+    Get user data.
+
+    Args:
+    - request (HttpRequest): A Django HttpRequest object, containing user 
+      authentication and authorization.
+
+    Returns:
+        UserModel: Present in database user object.
+    """
+    return UserInfoResponseSerializer(
+        get_object_or_404(UserModel, id=request.user.id)
+    )
     

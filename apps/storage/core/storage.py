@@ -15,14 +15,14 @@ from ..serializers import StorageCreationRequestSerializer, StorageModelSerializ
 # =============================================GET=============================================
 
 def get_storage_all_core(request: HttpRequest) -> List[StorageModel]:
-    """Returns a list of StorageModel objects that belong to the request.users
+    """Get a list of StorageModel objects that belong to the request.users
 
-    Parameters:
-    - request (HttpRequest): A Django HttpRequest object.
+    Args:
+    - request (HttpRequest): A Django HttpRequest object, containing user 
+      authentication and authorization.
 
     Returns:
     - List[StorageModel]: A list of all user StorageModel objects, sorted by name field.
-      Serialized using the StorageResponseSerializer class.
 
     """
     storage = StorageModel.objects.filter(user__id=request.user.id).order_by("name")
@@ -30,10 +30,11 @@ def get_storage_all_core(request: HttpRequest) -> List[StorageModel]:
 
 
 def get_storage_with_things_core(request: HttpRequest) -> List[StorageModel]:
-    """Returns a list of StorageModel objects that belong to the request.users
+    """Get a list of StorageModel objects that belong to the request.users
 
-    Parameters:
-    - request (HttpRequest): A Django HttpRequest object.
+    Args:
+    - request (HttpRequest): A Django HttpRequest object, containing user 
+      authentication and authorization.
 
     Returns:
     - List[StorageModel]: A list of StorageModel objects containing ItemModel 
@@ -49,8 +50,9 @@ def get_storage_with_things_core(request: HttpRequest) -> List[StorageModel]:
 def create_storage_core(request: HttpRequest) -> None:
     """Create a new storage.
 
-    Parameters:
-    - request (HttpRequest): The HTTP request object containing the user.
+    Args:
+    - request (HttpRequest): A Django HttpRequest object, containing user 
+      authentication and authorization.
 
     Returns:
     - None
@@ -73,8 +75,9 @@ def delete_storage_core(request: HttpRequest, storage_id: int) -> dict:
     """Delete storage
 
     Args:
-        request (HttpRequest): The HTTP request containing user authentication and authorization.
-        storage_id (int): The ID of the storage to be deleted.
+    - request (HttpRequest): A Django HttpRequest object, containing user 
+      authentication and authorization.
+    - storage_id (int): The ID of the storage to be deleted.
 
     Raises:
         code: 404 "Not found.". If the specified storage_id or user who submitted the deletion 

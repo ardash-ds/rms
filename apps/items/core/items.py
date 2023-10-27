@@ -2,31 +2,19 @@ import json
 import os
 from typing import List
 
-from rest_framework.parsers import JSONParser, DataAndFiles, MultiPartParser
-
-from django.core.exceptions import ObjectDoesNotExist
-from django.core.files.base import ContentFile
 from django.conf import settings
 from django.db import transaction
 from django.http import HttpRequest
 from django.shortcuts import get_object_or_404
 
-from django.core.files.uploadedfile import InMemoryUploadedFile
-from io import BytesIO
-
 from ..models import ItemModel, ItemImageModel
-from apps.categories.models import CategoryModel
 from core.exceptions import IncorrectFileFormatException
 
 from ..serializers import (
-    ItemCreationRequestSerializer,
-    ItemImagRequestSerialiser,
     ItemResponseSerializer,
     ItemRequestSerializer,
     ImageRequestSerialiser,
 )
-
-from apps.categories.serializers import CategoryModelSerializer
 
 
 # =============================================GET=============================================
@@ -36,10 +24,11 @@ def get_items_core(request: HttpRequest) -> List[ItemModel]:
     Retrieve a list user items
     
     Args:
-        request (HttpRequest): The HTTP request containing user authentication and authorization.
+    - request (HttpRequest): A Django HttpRequest object, containing user 
+      authentication and authorization.
     
     Returns:
-        List[ItemModel]: A list of items objects.
+    - List[ItemModel]: A list of items objects.
     """
     
     items = ItemModel.objects.filter(user=request.user)
@@ -51,11 +40,14 @@ def get_item_info_core(request: HttpRequest, item_id: int) -> ItemModel:
     Retrieve a detailed description of the item
     
     Args:
-        request (HttpRequest): The HTTP request containing user authentication and authorization.
+    - request (HttpRequest): A Django HttpRequest object, containing user 
+      authentication and authorization.
+    - item_id (int): ID of the object ItemModel whose data you want to get.  
     
     Returns:
-        ItemModel: Detailed description of the item.
+    - ItemModel: Detailed description of the item.
     """
+    
     item = get_object_or_404(ItemModel, id=item_id, user__id=request.user.id)
     return ItemResponseSerializer(item)
 
@@ -65,11 +57,13 @@ def get_item_info_core(request: HttpRequest, item_id: int) -> ItemModel:
 def create_item_core(request: HttpRequest) -> ItemModel:
     """Create a new item.
 
-    Parameters:
-    - request (HttpRequest): The HTTP request containing user authentication and authorization.
+    Args:
+    - request (HttpRequest): A Django HttpRequest object, containing user 
+      authentication and authorization.
 
     Returns:
-    - Object ItemModel.
+    - ItemModel: Data of the created object ItemModel. Serialized using the 
+      StorageResponseSerializer class.
 
     Raises:
     - ValidationError: If the data provided in the request is not valid.
@@ -103,16 +97,14 @@ def create_item_core(request: HttpRequest) -> ItemModel:
 def delete_item_core(request: HttpRequest, item_id: int) -> int:
     """Delete item.
 
-    Parameters:
-    - request (HttpRequest): The HTTP request containing user authentication and authorization.
-    - item_id(int): ID of the item to be deleted.
+    Args:
+    - request (HttpRequest): A Django HttpRequest object, containing user 
+      authentication and authorization.
+    - item_id(int): ID of the object ItemModel to be deleted.
 
     Returns:
-    - dict: A dictionary containing a detail message indicating the success of the deletion.
-              Example:
-              {
-                  "detail": "Item (id:{item_id}) was successfully deleted"
-              } .
+    - dict: A dictionary containing a detail message indicating 
+      the success of the deletion.
 
     Raises:
     - ValidationError: If the data provided in the request is not valid.

@@ -5,20 +5,18 @@ from drf_spectacular.utils import (
 
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
-from rest_framework.permissions import AllowAny 
-from rest_framework.permissions import IsAuthenticated as IsAuthenticated_
+from rest_framework.permissions import IsAuthenticated
 
 from django.http import HttpRequest, HttpResponse
 
 from apps.categories.core import (
-    get_category_core, 
+    get_category_all_core, 
     get_categories_with_things_core,
 )
 from apps.categories.serializers import CategoryModelSerializer
-from core.services import IsAuthenticated
+
 
 # =============================================GET=============================================
-
 
 @extend_schema(
     summary='WORKS: All categories',
@@ -34,10 +32,9 @@ from core.services import IsAuthenticated
     },
 )
 @api_view(['GET'])
-# @permission_classes([AllowAny])
-@permission_classes([IsAuthenticated_])
+@permission_classes([IsAuthenticated])
 def get_categories(request: HttpRequest) -> HttpResponse:
-    response = get_category_core(request)
+    response = get_category_all_core(request)
     return Response(response.data)
 
 
@@ -55,8 +52,7 @@ def get_categories(request: HttpRequest) -> HttpResponse:
     },
 )
 @api_view(['GET'])
-# @permission_classes([AllowAny])
-@permission_classes([IsAuthenticated_])
+@permission_classes([IsAuthenticated])
 def get_categories_with_things(request: HttpRequest) -> HttpResponse:
     response = get_categories_with_things_core(request)
     return Response(response.data)

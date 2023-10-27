@@ -1,10 +1,12 @@
 import json
+import os
 from typing import List
 
 from rest_framework.parsers import JSONParser, DataAndFiles, MultiPartParser
 
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.files.base import ContentFile
+from django.conf import settings
 from django.db import transaction
 from django.http import HttpRequest
 from django.shortcuts import get_object_or_404
@@ -29,7 +31,7 @@ from apps.categories.serializers import CategoryModelSerializer
 
 # =============================================GET=============================================
 
-def get_items_user_core(request: HttpRequest) -> List[ItemModel]:
+def get_items_core(request: HttpRequest) -> List[ItemModel]:
     """
     Retrieve a list user items
     
@@ -92,3 +94,40 @@ def create_item_core(request: HttpRequest) -> ItemModel:
             images.append(item_image.image_url.name)
 
     return ItemResponseSerializer(serialiser_item.instance).data
+
+
+# ============================================DELETE=============================================
+
+
+@transaction.atomic
+def delete_item_core(request: HttpRequest, item_id: int) -> int:
+    """Delete item.
+
+    Parameters:
+    - request (HttpRequest): The HTTP request containing user authentication and authorization.
+    - item_id(int): ID of the item to be deleted.
+
+    Returns:
+    - dict: A dictionary containing a detail message indicating the success of the deletion.
+              Example:
+              {
+                  "detail": "Item (id:{item_id}) was successfully deleted"
+              } .
+
+    Raises:
+    - ValidationError: If the data provided in the request is not valid.
+    """
+    
+    item = get_object_or_404(ItemModel, id=item_id, user__id=request.user.id)
+    images = ItemImageModel.objects.filter(item__id=item_id)
+    
+    if images:
+        for image in images:
+            image_path = os.path.join(settings.MEDIA_ROOT, str(image.image_url))
+            os.remove(image_path)
+        images.delete()
+    item.delete()
+        
+    return {
+        "detail": f"Item (id:{item_id}) was successfully deleted",
+    }

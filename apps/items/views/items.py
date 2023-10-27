@@ -12,9 +12,10 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 from django.http import HttpRequest, HttpResponse
 
 from ..core import (
-    get_items_user_core, 
-    get_item_info_core, 
     create_item_core,
+    get_items_core, 
+    get_item_info_core, 
+    delete_item_core,
 )
 from ..serializers import (
     ItemCreationRequestSerializer,
@@ -40,8 +41,8 @@ from ..serializers import (
 )
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
-def get_items_user(request: HttpRequest) -> HttpResponse:
-    response = get_items_user_core(request)
+def get_items(request: HttpRequest) -> HttpResponse:
+    response = get_items_core(request)
     return Response(response.data)
 
 
@@ -82,8 +83,33 @@ def get_item_info(request: HttpRequest, item_id: int) -> HttpResponse:
     },
 )
 @api_view(["POST"])
-@permission_classes([AllowAny])
-# @permission_classes([IsAuthenticated])
+@permission_classes([IsAuthenticated])
 def create_item(request: HttpRequest) -> HttpResponse:
     response = create_item_core(request=request)
     return Response(response, status=status.HTTP_201_CREATED)
+
+
+# =============================================DELETE=============================================
+
+
+@extend_schema(
+    summary="Delete Item",
+    description="Take item_id and delete item with that id",
+    methods=["DELETE"],
+    responses={
+        200: OpenApiResponse(
+            description="Item (id:{item_id}) was successfully deleted"
+        ),
+        400: OpenApiResponse(description="Error: Bad request"),
+        401: OpenApiResponse(description="Error: Unauthorized"),
+        404: OpenApiResponse(description="Error: Not found"),
+        422: OpenApiResponse(description="Error: Unprocessable entity"),
+        500: OpenApiResponse(description="Error: Internal server error"),
+    },
+)
+@api_view(["DELETE"])
+@permission_classes([AllowAny])
+# @permission_classes([IsAuthenticated])
+def delete_item(request: HttpRequest, item_id: int) -> HttpResponse:
+    response = delete_item_core(request=request, item_id=item_id)
+    return Response(response, status=status.HTTP_200_OK)

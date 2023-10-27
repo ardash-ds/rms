@@ -1,19 +1,27 @@
+import json
 from typing import List
 
-from rest_framework.parsers import JSONParser
+from rest_framework.parsers import JSONParser, DataAndFiles, MultiPartParser
 
 from django.core.exceptions import ObjectDoesNotExist
+from django.core.files.base import ContentFile
 from django.db import transaction
 from django.http import HttpRequest
 from django.shortcuts import get_object_or_404
 
-from ..models import ItemModel
+from django.core.files.uploadedfile import InMemoryUploadedFile
+from io import BytesIO
+
+from ..models import ItemModel, ItemImageModel
 from apps.categories.models import CategoryModel
+from core.exceptions import IncorrectFileFormatException
 
 from ..serializers import (
     ItemCreationRequestSerializer,
-    ItemModelSerializer,
+    ItemImagRequestSerialiser,
     ItemResponseSerializer,
+    ItemRequestSerializer,
+    ImageRequestSerialiser,
 )
 
 from apps.categories.serializers import CategoryModelSerializer
@@ -46,11 +54,12 @@ def get_item_info_core(request: HttpRequest, item_id: int) -> ItemModel:
     Returns:
         ItemModel: Detailed description of the item.
     """
-    item = get_object_or_404(id=item_id, user__id=request.user.id)
+    item = get_object_or_404(ItemModel, id=item_id, user__id=request.user.id)
     return ItemResponseSerializer(item)
 
 # ============================================POST=============================================
 
+@transaction.atomic
 def create_item_core(request: HttpRequest) -> ItemModel:
     """Create a new item.
 
@@ -63,11 +72,23 @@ def create_item_core(request: HttpRequest) -> ItemModel:
     Raises:
     - ValidationError: If the data provided in the request is not valid.
     """
+
+    data = request.data
+    serialiser_item = ItemRequestSerializer(data=json.loads(data.get('item')))
     
-    data = JSONParser().parse(request)
-    serializer = ItemCreationRequestSerializer(data=data)
-    serializer.is_valid(raise_exception=True)
-    serializer.validated_data["user"] = request.user
-    serializer.save()
+    serialiser_item.is_valid(raise_exception=True)
+    serialiser_item.validated_data["user"] = request.user
+    item = serialiser_item.save()
     
-    return ItemResponseSerializer(serializer.instance).data
+    files = request.FILES
+    if files:
+        serializer_image = ImageRequestSerialiser(data={'images': files})
+        serializer_image.is_valid(raise_exception=True)
+        images = []
+        for image in files.getlist('image_list'):
+            if "image" not in image.content_type:
+                raise IncorrectFileFormatException()
+            item_image = ItemImageModel.objects.create(item=item, image_url=image)
+            images.append(item_image.image_url.name)
+
+    return ItemResponseSerializer(serialiser_item.instance).data

@@ -11,10 +11,13 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 
 from django.http import HttpRequest, HttpResponse
 
-from ..core import get_items_user_core, get_item_info_core, create_item_core
+from ..core import (
+    get_items_user_core, 
+    get_item_info_core, 
+    create_item_core,
+)
 from ..serializers import (
     ItemCreationRequestSerializer,
-    ItemModelSerializer,
     ItemResponseSerializer,
 )
 
@@ -66,8 +69,8 @@ def get_item_info(request: HttpRequest, item_id: int) -> HttpResponse:
 
 @extend_schema(
     summary="WORKS: Create item",
-    description="Take item properties and create a new item.",
-    request=ItemCreationRequestSerializer,
+    description="Take item properties and images files, create a new item.",
+    request={"multipart/form-data": ItemCreationRequestSerializer},
     methods=["POST"],
     responses={
         201: OpenApiResponse(description="Storage was successfully created"),
@@ -79,7 +82,8 @@ def get_item_info(request: HttpRequest, item_id: int) -> HttpResponse:
     },
 )
 @api_view(["POST"])
-@permission_classes([IsAuthenticated])
+@permission_classes([AllowAny])
+# @permission_classes([IsAuthenticated])
 def create_item(request: HttpRequest) -> HttpResponse:
     response = create_item_core(request=request)
     return Response(response, status=status.HTTP_201_CREATED)

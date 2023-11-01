@@ -15,5 +15,6 @@ class UserInfoResponseSerializer(serializers.ModelSerializer):
             'email',
             'first_name',
             'last_name',
+            'created_at',
         ]
     

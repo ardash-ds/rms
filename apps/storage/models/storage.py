@@ -9,7 +9,7 @@ class StorageModel(models.Model):
         related_name='storage_user', 
         on_delete=models.PROTECT,
     )
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateField(auto_now_add=True)
 
     class Meta:
         ordering = ['name']

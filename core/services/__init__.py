@@ -1,4 +1,4 @@
-from .test_client_login import TestClientLoginService
+from .test_client_login import TestClientLoginService, test_client_login
 from .auth_config import (
     CookiesAuthentication, 
     CookiesAuthenticationExtension,
@@ -10,4 +10,5 @@ __all__ = (
     'CookiesAuthenticationExtension',
     'TestClientLoginService',
     'IsAuthenticated',
+    'test_client_login',
 )

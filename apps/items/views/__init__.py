@@ -1,4 +1,10 @@
-from .items import get_items, get_item_info, create_item, delete_item
+from .items import (
+    get_items, 
+    get_item_info, 
+    create_item, 
+    delete_item, 
+    update_item,
+)
 
 
 __all__ = (
@@ -6,4 +12,5 @@ __all__ = (
     'get_items',
     'get_item_info',
     'delete_item',
+    'update_item',
 )

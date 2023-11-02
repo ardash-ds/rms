@@ -16,10 +16,12 @@ from ..core import (
     get_items_core, 
     get_item_info_core, 
     delete_item_core,
+    update_item_core,
 )
 from ..serializers import (
     ItemCreationRequestSerializer,
     ItemResponseSerializer,
+    ItemUpdateRequestSerializer,
 )
 
 
@@ -30,7 +32,7 @@ from ..serializers import (
     description='Returns a list of user items',
     methods=["GET"],
     responses={
-        200: OpenApiResponse(response=ItemResponseSerializer(many=True)),
+        200: OpenApiResponse(response=ItemUpdateRequestSerializer(many=True)),
         400: OpenApiResponse(description="Error: Bad request"),
         401: OpenApiResponse(description="Error: Unauthorized"),
         404: OpenApiResponse(description="Error: Not found"),
@@ -50,7 +52,7 @@ def get_items(request: HttpRequest) -> HttpResponse:
     description='Returns a detailed description of the item',
     methods=["GET"],
     responses={
-        200: OpenApiResponse(response=ItemResponseSerializer()),
+        200: OpenApiResponse(response=ItemResponseSerializer),
         400: OpenApiResponse(description="Error: Bad request"),
         401: OpenApiResponse(description="Error: Unauthorized"),
         404: OpenApiResponse(description="Error: Not found"),
@@ -106,8 +108,30 @@ def create_item(request: HttpRequest) -> HttpResponse:
     },
 )
 @api_view(["DELETE"])
-# @permission_classes([AllowAny])
 @permission_classes([IsAuthenticated])
 def delete_item(request: HttpRequest, item_id: int) -> HttpResponse:
     response = delete_item_core(request=request, item_id=item_id)
     return Response(response, status=status.HTTP_200_OK)
+
+# =============================================PUT=============================================
+
+@extend_schema(
+    summary='WORKS: Update item',
+    description='Returns a detailed description of the item',
+    methods=["PUT"],
+    request={"multipart/form-data": ItemUpdateRequestSerializer},
+    responses={
+        200: OpenApiResponse(response=ItemResponseSerializer),
+        400: OpenApiResponse(description="Error: Bad request"),
+        401: OpenApiResponse(description="Error: Unauthorized"),
+        404: OpenApiResponse(description="Error: Not found"),
+        422: OpenApiResponse(description="Error: Unprocessable entity"),
+        500: OpenApiResponse(description="Error: Internal server error"),
+    },
+)
+@api_view(['PUT'])
+@permission_classes([AllowAny])
+# @permission_classes([IsAuthenticated])
+def update_item(request: HttpRequest, item_id: int) -> HttpResponse:
+    response = update_item_core(request=request, item_id=item_id)
+    return Response(response,  status=status.HTTP_200_OK)

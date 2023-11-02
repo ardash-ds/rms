@@ -1,6 +1,12 @@
 from django.urls import path
 
-from ..views import get_items, get_item_info, create_item, delete_item
+from ..views import (
+    create_item, 
+    delete_item,
+    get_items, 
+    get_item_info, 
+    update_item,
+)
 
 
 urlpatterns = [
@@ -23,5 +29,10 @@ urlpatterns = [
         route='<int:item_id>/delete/',
         view=delete_item,
         name='delete_item',
+    ),
+    path(
+        route='<int:item_id>/update/',
+        view=update_item,
+        name='update_item',
     ),
 ]

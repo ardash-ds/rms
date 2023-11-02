@@ -9,8 +9,8 @@ class ItemModelSerializer(serializers.ModelSerializer):
         fields = '__all__'
         
         
-class ItemImageModelSerialiser(serializers.ModelSerializer):
+class ItemImageModelSerializer(serializers.ModelSerializer):
     class Meta:
         model = ItemImageModel
-        fields = ['image_url']
+        fields = ['id', 'image_url']
         

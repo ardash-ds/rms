@@ -43,10 +43,11 @@ class TestClientLoginService:
             "email": "user1@example.com",
             "password": "qwerty1234"
         }
-        self.client.post(path=self.sign_in_path, data=data, content_type="application/json")
-        user = UserModel.objects.get(email='user1@example.com')
-        refresh = RefreshToken.for_user(user)
-        self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {refresh}')
+        # self.client.post(path=self.sign_in_path, data=data, content_type="application/json")
+        # print(self.client.head)
+        # user = UserModel.objects.get(email='user1@example.com')
+        # refresh = RefreshToken.for_user(user)
+        # self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {refresh}')
         return self.client
 
 def test_client_login():

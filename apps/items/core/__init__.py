@@ -3,6 +3,7 @@ from .items import (
     get_items_core, 
     get_item_info_core, 
     delete_item_core,
+    update_item_core,
 )
 
 
@@ -12,4 +13,5 @@ __all__ = (
     'get_items_core',
     'get_item_info_core',
     'delete_item_core',
+    'update_item_core',
 )

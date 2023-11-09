@@ -7,6 +7,7 @@ from rest_framework.test import APIClient
 from rest_framework_simplejwt.tokens import RefreshToken
 
 from apps.users.models import UserModel
+from core.services import TestClientLoginService
 
 
 class GetItemInfoTestCase(TestCase):
@@ -16,7 +17,7 @@ class GetItemInfoTestCase(TestCase):
     ]
     
     def setUp(self):
-
+        self.client = TestClientLoginService()
         self.auth_user = APIClient()
         self.unauth_user = APIClient()
         self.valid_url = reverse("get_item_info",  kwargs={"item_id": 1})

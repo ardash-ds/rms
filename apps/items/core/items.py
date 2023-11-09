@@ -49,14 +49,10 @@ def get_item_info_core(request: HttpRequest, item_id: int) -> ItemModel:
     Returns:
     - ItemModel: Detailed description of the item.
     """
-    
     item = get_object_or_404(ItemModel, id=item_id, user__id=request.user.id)
-    images = ItemImageModel.objects.filter(item=item)
-    # serialiser = ItemResponseSerializer(data=item)
-    # serialiser.is_valid(raise_exception=True)
-    # serialiser.validated_data['images'] = images
-    # print('gggggg', ItemResponseSerializer(data=item, images=images))
-    return ItemResponseSerializer(item)
+    response = ItemResponseSerializer(item)
+    
+    return response
 # ============================================POST=============================================
 
 @transaction.atomic
@@ -138,7 +134,7 @@ def delete_item_core(request: HttpRequest, item_id: int) -> dict:
 
 def update_item_core(request: HttpRequest, item_id: int) -> dict:
     data = request.data
-    item = get_object_or_404(ItemModel, id=item_id)   # добавить user=request.user
+    item = get_object_or_404(ItemModel, id=item_id, user=request.user)
     serialiser_item = ItemRequestSerializer(instance=item, data=json.loads(data.get('item')))
     serialiser_item.is_valid(raise_exception=True)
     serialiser_item.save()
@@ -146,6 +142,12 @@ def update_item_core(request: HttpRequest, item_id: int) -> dict:
     if data.get('image_delete_list'):
         image_delete_list = data.get('image_delete_list').split(',')
         print('dddd', ((image_delete_list)))
+        
+        for image_id in image_delete_list:
+            image = get_object_or_404(ItemImageModel, id=image_id)
+            image_path = os.path.join(settings.MEDIA_ROOT, str(image.image_url))
+            os.remove(image_path)
+            image.delete()
     
     
     files = request.FILES

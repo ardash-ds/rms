@@ -15,6 +15,6 @@ class UserRegistrationRequestSerializer(serializers.ModelSerializer):
         }
 
 
-class UserRefreshSerializer(serializers.Serializer):
+class UserRefreshRequestSerializer(serializers.Serializer):
     refresh = serializers.CharField()
     

@@ -41,7 +41,6 @@ from ..serializers import (
     },
 )
 @api_view(['GET'])
-# @permission_classes([AllowAny])
 @permission_classes([IsAuthenticated])
 def get_items(request: HttpRequest) -> HttpResponse:
     response = get_items_core(request)
@@ -62,7 +61,6 @@ def get_items(request: HttpRequest) -> HttpResponse:
     },
 )
 @api_view(['GET'])
-# @permission_classes([AllowAny])
 @permission_classes([IsAuthenticated])
 def get_item_info(request: HttpRequest, item_id: int) -> HttpResponse:
     response = get_item_info_core(request, item_id)
@@ -132,7 +130,6 @@ def delete_item(request: HttpRequest, item_id: int) -> HttpResponse:
     },
 )
 @api_view(['PUT'])
-# @permission_classes([AllowAny])
 @permission_classes([IsAuthenticated])
 def update_item(request: HttpRequest, item_id: int) -> HttpResponse:
     response = update_item_core(request=request, item_id=item_id)

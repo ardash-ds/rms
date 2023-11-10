@@ -7,20 +7,21 @@ from rest_framework.decorators import (
     api_view,
     permission_classes,
 )
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 
 from django.http import HttpResponse, HttpRequest
 
 from ..core import (
-    get_user_info_core,
-    refresh_token_validation_core, 
+    blacklists_the_token,
+    get_user_info_core, 
     sign_in_core, 
     sign_up_core,
 )
 from ..serializers import (
     UserInfoResponseSerializer,
     UserRegistrationRequestSerializer,
+    UserRefreshRequestSerializer,
 )
 from ..services import (
     get_tokens_for_user, 
@@ -53,8 +54,10 @@ def sign_up(request: HttpRequest) -> HttpResponse:
     sign_up_core(request=request)
     return HttpResponse(status=201)
 
+
 @extend_schema(
-    description="WORKS: Take user's email and password and return 'access' and 'refresh' tokens",
+    summary="WORKS: Signin",
+    description="Take user's email and password and return 'access' and 'refresh' tokens",
     request=UserRegistrationRequestSerializer,
     methods=["POST"],
     responses={
@@ -90,28 +93,26 @@ def sign_in_cookies(request: HttpRequest) -> HttpResponse:
     user = sign_in_core(request=request)
     return get_token_http_response(user)
 
-
+    
 @extend_schema(
-    summary="WORKS: Refresh access token",
-    description="Take user's 'refresh' token from cookies, update 'access' token",
+    summary="WORKS: Logout",
+    description="Take authenticated user's refresh token, revoke it and blacklist it",
+    request=UserRefreshRequestSerializer,
     methods=["POST"],
-    request=None,
     responses={
-        200: OpenApiResponse(description="Successfully refreshed token."),
-        401: OpenApiResponse(description="Error: Unauthorized"),
-        500: OpenApiResponse(description="Error: Internal server error"),
+        204: OpenApiResponse(description="Successfully logged out."),
+        400: OpenApiResponse(description="Error: Refresh token is required."),
+        401: OpenApiResponse(description="Error: Authentication credentials were not provided."),
+        422: OpenApiResponse(description="Error: Token is invalid or expired"),
     },
     tags=[
         "users",
     ],
 )
 @api_view(["POST"])
-@permission_classes([AllowAny])
-def refresh_token_cookies(request: HttpRequest) -> HttpResponse:
-    validated_data = refresh_token_validation_core(request=request)
-    return get_token_http_response(
-        user=request.user, refresh_token=validated_data.data["refresh"]
-    )
+@permission_classes([IsAuthenticated])
+def logout(request: HttpRequest) -> HttpResponse:
+    return blacklists_the_token(request=request)
     
 
 # =============================================GET=============================================
@@ -129,8 +130,12 @@ def refresh_token_cookies(request: HttpRequest) -> HttpResponse:
         422: OpenApiResponse(description="Error: Unprocessable entity"),
         500: OpenApiResponse(description="Error: Internal server error"),
     },
+    tags=[
+        "users",
+    ]
 )
 @api_view(["GET"])
+@permission_classes([IsAuthenticated])
 def get_user_info(request: HttpRequest) -> Response:
     response = get_user_info_core(request=request)
     return Response(response.data)

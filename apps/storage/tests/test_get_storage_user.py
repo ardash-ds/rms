@@ -8,7 +8,7 @@ from django.urls import reverse
 from rest_framework.test import APIClient
 from rest_framework_simplejwt.tokens import RefreshToken
 
-from apps.users.models import UserModel
+from core.services import TestClientLoginService
 
 
 class GetStorageUserTestCase(TestCase):
@@ -16,13 +16,9 @@ class GetStorageUserTestCase(TestCase):
         "population/fixtures/test_data.json",
     ]
     def setUp(self):
-        self.auth_user = APIClient()
-        self.unauth_user = APIClient()
+        self.auth_user = TestClientLoginService().auth()
+        self.unauth_user = TestClientLoginService().unauth()
         self.url = reverse('get_storage_all')
-        user = UserModel.objects.get(email='user1@example.com')
-        refresh = RefreshToken.for_user(user)
-        self.auth_user.credentials(HTTP_AUTHORIZATION=f'Bearer {refresh.access_token}')
-        
         
     def test_get_storage_unauthenticated(self):
         response = self.unauth_user.get(path=self.url)

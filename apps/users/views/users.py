@@ -22,6 +22,7 @@ from ..serializers import (
     UserInfoResponseSerializer,
     UserRegistrationRequestSerializer,
     UserRefreshRequestSerializer,
+    SigninRequestSerializer,
 )
 from ..services import (
     get_tokens_for_user, 
@@ -58,7 +59,7 @@ def sign_up(request: HttpRequest) -> HttpResponse:
 @extend_schema(
     summary="WORKS: Signin",
     description="Take user's email and password and return 'access' and 'refresh' tokens",
-    request=UserRegistrationRequestSerializer,
+    request=SigninRequestSerializer,
     methods=["POST"],
     responses={
         200: OpenApiResponse(description="Successfully registrated."),

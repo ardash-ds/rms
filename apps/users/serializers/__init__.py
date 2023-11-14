@@ -1,4 +1,8 @@
-from .request import UserRegistrationRequestSerializer, UserRefreshRequestSerializer
+from .request import (
+    UserRegistrationRequestSerializer, 
+    UserRefreshRequestSerializer,
+    SigninRequestSerializer,
+)
 from .response import SignInResponseSerializer, UserInfoResponseSerializer
 
 __all__ = (
@@ -6,4 +10,5 @@ __all__ = (
     'UserRegistrationRequestSerializer',
     'UserRefreshRequestSerializer',
     'SignInResponseSerializer',
+    'SigninRequestSerializer',
 )

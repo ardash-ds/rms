@@ -8,6 +8,15 @@ class UserRegistrationRequestSerializer(serializers.ModelSerializer):
         fields = [
             'email', 
             'password',
+            'first_name',
+        ]
+        
+class SigninRequestSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserModel
+        fields = [
+            'email', 
+            'password',
         ]
         extra_kwargs = {
             "email": {"default": "user1@example.com"},

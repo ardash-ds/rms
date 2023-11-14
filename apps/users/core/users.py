@@ -36,8 +36,14 @@ def sign_up_core(request: HttpRequest) -> None:
 
     email = serializer.validated_data["email"]
     password = serializer.validated_data["password"]
+    first_name = serializer.validated_data["first_name"]
 
-    UserModel.objects.create_user(username=email, email=email, password=password)
+    UserModel.objects.create_user(
+        username=email, 
+        email=email, 
+        password=password, 
+        first_name=first_name
+    )
 
     
 @transaction.atomic

@@ -113,26 +113,26 @@ SITE_ID = 1
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql', 
-        'OPTIONS': {
-            'sql_mode': 'traditional',
-        },
-        'NAME': env.str('NAME_DB'),
-        'USER': env.str('USER_DB'),
-        'PASSWORD': env.str('PASSWORD_DB'),
-        'HOST': env.str('HOST_DB'),
-        'PORT': env.int('PORT_DB'),
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql', 
+#         'OPTIONS': {
+#             'sql_mode': 'traditional',
+#         },
+#         'NAME': env.str('NAME_DB'),
+#         'USER': env.str('USER_DB'),
+#         'PASSWORD': env.str('PASSWORD_DB'),
+#         'HOST': env.str('HOST_DB'),
+#         'PORT': env.int('PORT_DB'),
+#     }
+# }
 
 
 # Password validation

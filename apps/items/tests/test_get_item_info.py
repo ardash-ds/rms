@@ -7,7 +7,6 @@ from core.services import TestClientLoginService
 
 
 class GetItemInfoTestCase(TestCase):
-    
     fixtures = [
         "population/fixtures/test_data.json",
     ]

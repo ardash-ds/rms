@@ -30,14 +30,13 @@ class TestClientLoginService:
         
         return APIClient()
     
-    def auth(self, email: str = 'user1@example.com'):
+    def auth(self, email: str):
         """
         Returns:
             Client: The authenticated Django test client.
         """
 
         user = UserModel.objects.get(email=email)
-        print(user)
         refresh = RefreshToken.for_user(user)
         self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {refresh.access_token}')
         return self.client

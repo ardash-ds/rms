@@ -12,7 +12,7 @@ class GetCategoriesTestCase(TestCase):
     ]
     
     def setUp(self):
-        self.auth_user = TestClientLoginService().auth('user2@example.com')
+        self.auth_user = TestClientLoginService().auth('user1@example.com')
         self.unauth_user = TestClientLoginService().unauth()
         self.url = reverse('get_categories')
         

@@ -16,7 +16,7 @@ class GetStorageUserTestCase(TestCase):
         "population/fixtures/test_data.json",
     ]
     def setUp(self):
-        self.auth_user = TestClientLoginService().auth()
+        self.auth_user = TestClientLoginService().auth('user1@example.com')
         self.unauth_user = TestClientLoginService().unauth()
         self.url = reverse('get_storage_all')
         

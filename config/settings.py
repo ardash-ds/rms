@@ -210,12 +210,12 @@ AUTH_USER_MODEL = 'users.UserModel'
 
 REST_FRAMEWORK = {
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
-    ),
     # 'DEFAULT_AUTHENTICATION_CLASSES': (
-    #     'core.services.auth_config.CookiesAuthentication',
+    #     'rest_framework_simplejwt.authentication.JWTAuthentication',
     # ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'core.services.auth_config.CookiesAuthentication',
+    ),
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated',
     ],
@@ -231,12 +231,12 @@ SPECTACULAR_SETTINGS = {
     'DESCRIPTION': 'Card file of storage places for user\'s belongings',
     'VERSION': '1.0.0',
     'SERVE_INCLUDE_SCHEMA': False,
-    'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
-    ],
     # 'DEFAULT_AUTHENTICATION_CLASSES': [
-    #     'core.services.auth_config.CookiesAuthentication',
+    #     'rest_framework_simplejwt.authentication.JWTAuthentication',
     # ],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'core.services.auth_config.CookiesAuthentication',
+    ],
     # 'OPENAPI_AUTHENTICATION_EXTENSIONS': [
     #     'core.services.auth_config.CookiesAuthenticationExtension',
     # ],
@@ -286,16 +286,16 @@ SIMPLE_JWT = {
 }
 
 # CSRF cookie
-# CSRF_COOKIE_SECURE = False
-# CSRF_COOKIE_HTTPONLY = True
-# CSRF_TRUSTED_ORIGINS = ['http://*', 'https://codesandbox.io/']
-# CSRF_COOKIE_SAMESITE = "None"
+CSRF_COOKIE_SECURE = False
+CSRF_COOKIE_HTTPONLY = True
+CSRF_TRUSTED_ORIGINS = ['http://*', 'https://codesandbox.io/']
+CSRF_COOKIE_SAMESITE = "None"
 
 # Session cookie
 # SESSION_ENGINE = 'django.contrib.sessions.backends.signed_cookies'
 # SESSION_COOKIE_NAME = 'sessionid'
-# SESSION_COOKIE_SECURE = False 
-# SESSION_COOKIE_SAMESITE = 'None'
+SESSION_COOKIE_SECURE = False 
+SESSION_COOKIE_SAMESITE = 'None'
 # SESSION_COOKIE_HTTPONLY = True
 
 # SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')

@@ -78,7 +78,7 @@ def sign_in(request: HttpRequest) -> HttpResponse:
 
 @extend_schema(
     description="WORKS: Take user's email and password and return 'access' and 'refresh' tokens in cookies",
-    request=UserRegistrationRequestSerializer,
+    request=SigninRequestSerializer,
     methods=["POST"],
     responses={
         200: OpenApiResponse(description="Successfully registrated."),

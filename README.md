@@ -10,14 +10,22 @@
 1. Склонируйте репозиторий 
 
 ```
-git clone git@github.com:Ardash12/rms.git
+git clone https://github.com/ardash-ds/user-belongings-management.git
 ```
 
 2. Установите виртуальное окружение и активируйие его
 
+
+Для windows:
 ```
 python -m venv venv
 venv\scripts\activate
+```
+
+Для linux:
+```
+python3 -m venv venv
+source venv/bin/activate
 ```
 
 3. Установите зависимости

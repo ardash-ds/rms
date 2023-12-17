@@ -113,26 +113,26 @@ SITE_ID = 1
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql', 
-        'OPTIONS': {
-            'sql_mode': 'traditional',
-        },
-        'NAME': env.str('NAME_DB'),
-        'USER': env.str('USER_DB'),
-        'PASSWORD': env.str('PASSWORD_DB'),
-        'HOST': env.str('HOST_DB'),
-        'PORT': env.int('PORT_DB'),
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql', 
+#         'OPTIONS': {
+#             'sql_mode': 'traditional',
+#         },
+#         'NAME': env.str('NAME_DB'),
+#         'USER': env.str('USER_DB'),
+#         'PASSWORD': env.str('PASSWORD_DB'),
+#         'HOST': env.str('HOST_DB'),
+#         'PORT': env.int('PORT_DB'),
+#     }
+# }
 
 
 # Password validation
@@ -210,12 +210,12 @@ AUTH_USER_MODEL = 'users.UserModel'
 
 REST_FRAMEWORK = {
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
-    # 'DEFAULT_AUTHENTICATION_CLASSES': (
-    #     'rest_framework_simplejwt.authentication.JWTAuthentication',
-    # ),
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'core.services.auth_config.CookiesAuthentication',
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
+    # 'DEFAULT_AUTHENTICATION_CLASSES': (
+    #     'core.services.auth_config.CookiesAuthentication',
+    # ),
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated',
     ],
@@ -231,12 +231,12 @@ SPECTACULAR_SETTINGS = {
     'DESCRIPTION': 'Card file of storage places for user\'s belongings',
     'VERSION': '1.0.0',
     'SERVE_INCLUDE_SCHEMA': False,
-    # 'DEFAULT_AUTHENTICATION_CLASSES': [
-    #     'rest_framework_simplejwt.authentication.JWTAuthentication',
-    # ],
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'core.services.auth_config.CookiesAuthentication',
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
     ],
+    # 'DEFAULT_AUTHENTICATION_CLASSES': [
+    #     'core.services.auth_config.CookiesAuthentication',
+    # ],
     # 'OPENAPI_AUTHENTICATION_EXTENSIONS': [
     #     'core.services.auth_config.CookiesAuthenticationExtension',
     # ],

@@ -1,0 +1,25 @@
+version: "3.9"
+
+services:
+  db_population:
+    container_name: rms_db_population
+    image: rms_db_population
+    build:
+      context: ${PWD}
+      dockerfile: docker/Dockerfile
+    command: >
+      bash -c "python manage.py flush --no-input &&
+              python manage.py entity_population"
+    volumes:
+      - ${PWD}/:/app
+    env_file:
+      - ${PWD}/.env
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - rms_net
+
+networks:
+  rms_net:
+    driver: bridge

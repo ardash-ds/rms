@@ -1,5 +1,6 @@
 .idea/
 venv/
+.venv/
 env/
 **/media/*
 **/static/admin/*
@@ -13,3 +14,4 @@ env/
 !obj_card/migrations/__init__.py
 db.sqlite3
 .env
+

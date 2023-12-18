@@ -1,0 +1,26 @@
+version: "3.9"
+
+services:
+  db_migrations:
+    container_name: rms_db_migrations
+    image: rms_db_migrations
+    build:
+      context: ${PWD}
+      dockerfile: docker/Dockerfile
+    command: >
+      bash -c "python manage.py flush --no-input &&
+              python manage.py makemigrations users categories items storage &&
+              python manage.py migrate"
+    volumes:
+      - ${PWD}/:/app
+    env_file:
+      - ${PWD}/.env
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - rms_net
+
+networks:
+  rms_net:
+    driver: bridge

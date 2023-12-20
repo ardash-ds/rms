@@ -1,5 +1,5 @@
-docker-compose -f ./docker/compose/main.yml -f ./docker/compose/app.yml -f ./docker/compose/db.yml --env-file .env build
-docker-compose -f ./docker/compose/main.yml -f ./docker/compose/app.yml -f ./docker/compose/db.yml --env-file .env up
+docker-compose -f ./docker/compose/main.yml -f ./docker/compose/app.yml -f ./docker/compose/db.yml -f ./docker/compose/nginx.yml --env-file .env build
+docker-compose -f ./docker/compose/main.yml -f ./docker/compose/app.yml -f ./docker/compose/db.yml -f ./docker/compose/nginx.yml --env-file .env up
 
 docker-compose -f ./docker/compose/main.yml -f ./docker/compose/db.yml -f ./docker/compose/migrations.yml --env-file .env up --abort-on-container-exit --exit-code-from db_migrations
 docker-compose -f ./docker/compose/main.yml -f ./docker/compose/db.yml -f ./docker/compose/dbpopulation.yml --env-file .env up --abort-on-container-exit --exit-code-from db_population

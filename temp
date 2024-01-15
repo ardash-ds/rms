@@ -5,3 +5,11 @@ docker-compose -f ./docker/compose/main.yml -f ./docker/compose/db.yml -f ./dock
 docker-compose -f ./docker/compose/main.yml -f ./docker/compose/db.yml -f ./docker/compose/dbpopulation.yml --env-file .env up --abort-on-container-exit --exit-code-from db_population
 
 
+docker-compose -f ./docker/compose/main.yml -f ./docker/compose/app.yml -f ./docker/compose/db.yml --env-file .env build
+
+
+docker-compose -f ./docker/compose/app.yml -f ./docker/compose/db.yml --env-file .env build
+
+docker-compose -f ./docker/compose/db.yml -f ./docker/compose/tests.yml --env-file .env build
+
+docker-compose -f ./docker/compose/db.yml -f ./docker/compose/tests.yml --env-file .env up
